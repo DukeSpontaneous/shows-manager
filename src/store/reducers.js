@@ -1,6 +1,6 @@
 import { ACTIONS as A } from '../constants'
 
-export const shows = (state = [], action = { type: null }) => {
+export const data = (state = [], action = { type: null }) => {
   console.log(`shows-reducer action: ${action.type}`)
   switch (action.type) {
     case A.SWOWS_LOADED:
