@@ -1,6 +1,7 @@
-import React from 'react';
+import PropTypes from 'prop-types'
+import React from 'react'
 
-const Show = ({ data }) => (
+const ShowRow = ({ data }) => (
   <tr>
     <td>{data.show.title}</td>
     <td>{data.show.year}</td>
@@ -11,4 +12,8 @@ const Show = ({ data }) => (
   </tr>
 )
 
-export default Show;
+ShowRow.propTypes = {
+  data: PropTypes.object.isRequired
+}
+
+export default ShowRow

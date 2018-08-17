@@ -1,31 +1,15 @@
-import React, { Component } from 'react';
-import Show from './show'
+import PropTypes from 'prop-types'
+import React, { Component } from 'react'
+import ShowRow from './ShowRow'
 
 class Shows extends Component {
-  constructor(props) {
-    super(props);
-    this.state = { data: [] };
-  }
-
   componentDidMount() {
-    const myHeaders = new Headers({
-      'Content-Type': 'application/json',
-      'trakt-api-version': '2',
-      'trakt-api-key': 'a7970fc9095e0bca9dc85a9255bc8b9c3d7ac7e120258ab85648ba1a99c89651'
-    });
-
-    const myInit = {
-      method: 'GET',
-      headers: myHeaders
-    };
-
-    fetch('https://api.trakt.tv/shows/watched/all', myInit)
-      .then(response => response.json())
-      .then(data => this.setState({ data }));
+    const { onInit } = this.props;
+    onInit();
   }
 
   render() {
-    const { data } = this.state;
+    const { data } = this.props
 
     return (
       <div>
@@ -43,7 +27,7 @@ class Shows extends Component {
           <tbody>
             {
               data.map((item, index) =>
-                <Show
+                <ShowRow
                   key={index}
                   data={item}
                 />
@@ -52,8 +36,17 @@ class Shows extends Component {
           </tbody>
         </table>
       </div>
-    );
+    )
   }
 }
 
-export default Shows;
+Shows.propTypes = {
+  onInit: PropTypes.func.isRequired,
+  data: PropTypes.array.isRequired
+}
+
+Shows.defaultProps = {
+  data: []
+}
+
+export default Shows
