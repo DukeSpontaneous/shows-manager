@@ -5,8 +5,8 @@ import { getPage } from '../actions'
 
 export const Shows = connect(
   (state, { match }) => {
-    const { data } = state;
-    const { sort, page } = match.params;
+    const { data } = state
+    const { sort, page } = match.params
     return {
       data
     }

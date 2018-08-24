@@ -6,19 +6,26 @@ import '../../stylesheets/ShowTable.css'
 
 class Shows extends Component {
   componentDidMount() {
-    const { match, onRelocation } = this.props;
-    const { sort, page } = match.params;
-    onRelocation(sort, page);
+    const { match, onRelocation } = this.props
+    const { sort, page } = match.params
+    onRelocation(sort, page)
   }
 
-  componentDidUpdate() {
-    const { match, onRelocation } = this.props;
-    const { sort, page } = match.params;
-    onRelocation(sort, page);
+  isParamsCanged(params) {
+    const { sort, page } = this.props.match.params
+    return page !== params.page ||
+      sort !== params.sort
+  }
+
+  componentDidUpdate({ match }) {
+    const { onRelocation } = this.props
+    const { sort, page } = this.props.match.params
+    if (this.isParamsCanged(match.params))
+      onRelocation(sort, page)
   }
 
   render() {
-    const { match, history, data, onSort, } = this.props
+    const { match, history, data, onSort, onRelocation } = this.props
 
     return (
       <table className='table table-striped'>
@@ -29,7 +36,7 @@ class Shows extends Component {
             <th onClick={() => history.push(`/${S.WATCHED}/1`)}>watcher_count</th>
             <th onClick={() => history.push(`/${S.PLAYED}/1`)}>play_count</th>
             <th>collected_count</th>
-            <th button onClick={() => history.push(`/${S.COLLECTED}/1`)}>collector_count</th>
+            <th onClick={() => history.push(`/${S.COLLECTED}/1`)}>collector_count</th>
           </tr>
         </thead>
         <tbody>
