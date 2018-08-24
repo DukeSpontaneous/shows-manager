@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 
-const ShowRow = ({ data }) => (
+const ShowRow = ({ data }) =>
   <tr>
     <td>{data.show.title}</td>
     <td>{data.show.year}</td>
@@ -10,7 +10,6 @@ const ShowRow = ({ data }) => (
     <td>{data.collected_count}</td>
     <td>{data.collector_count}</td>
   </tr>
-)
 
 ShowRow.propTypes = {
   data: PropTypes.object.isRequired

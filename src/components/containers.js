@@ -4,12 +4,19 @@ import ShowTable from './ui/ShowTable'
 import { getPage } from '../actions'
 
 export const Shows = connect(
-  (state) => ({
-    data: state.data
-  }),
+  (state, { match }) => {
+    const { data } = state;
+    const { sort, page } = match.params;
+    return {
+      data
+    }
+  },
   dispatch => ({
-    onInit(...args) {
-      dispatch(getPage(...args))
+    onRelocation(sort, page) {
+      dispatch(getPage(sort, page))
+    },
+    onSort(sort) {
+      dispatch(getPage(sort, 1))
     }
   })
 )(ShowTable)

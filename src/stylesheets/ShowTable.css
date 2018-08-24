@@ -1,0 +1,5 @@
+th:hover {
+  cursor: pointer;
+  text-decoration: none;
+  background-color: beige;
+}

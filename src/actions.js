@@ -19,7 +19,7 @@ const fetchThenDispatch = (dispatch, url, init) =>
     .then(dispatch)
     .catch(error => console.error(error))
 
-export const getPage = (page = 1, limit = 10, sort = S.WATCHED) => dispatch => {
+export const getPage = (sort = S.WATCHED, page = 1, limit = 10) => dispatch => {
   const parameters = `page=${page}&limit=${limit}`
   const url = `https://api.trakt.tv/shows/${sort}/all?${parameters}`
   return fetchThenDispatch(
@@ -28,3 +28,9 @@ export const getPage = (page = 1, limit = 10, sort = S.WATCHED) => dispatch => {
     myInit
   )
 }
+
+// Насколько я понимаю...
+// 1) обработчик События вызывает Генератор Действий...
+// 2) асинхронный Генератор Действий инициирует Обещание, которое возвращает Действие...
+// 3) Действие попадает в Преобразователь через .then(dispatch)...
+// 4) отрабатывает привязка свойств в `connect()`, где данные из общего `state` перекидываются в `props` компонента?!
