@@ -13,10 +13,10 @@ const myInit = {
 }
 
 const parseXPaginationHeaders = headers => ({
-  page: headers.get('X-Pagination-Page'),
-  limit: headers.get('X-Pagination-Limit'),
-  pageCount: headers.get('X-Pagination-Page-Count'),
-  itemCount: headers.get('X-Pagination-Item-Count')
+  page: parseInt(headers.get('X-Pagination-Page'), 10),
+  limit: parseInt(headers.get('X-Pagination-Limit'), 10),
+  pageCount: parseInt(headers.get('X-Pagination-Page-Count'), 10),
+  itemCount: parseInt(headers.get('X-Pagination-Item-Count'), 10)
 })
 
 const fetchThenDispatch = (dispatch, url, init) => {
@@ -26,8 +26,7 @@ const fetchThenDispatch = (dispatch, url, init) => {
   return fetch(url, init)
     .then(respond => {
       const xPagination = parseXPaginationHeaders(respond.headers)
-      pageCount = parseInt(xPagination.pageCount, 10)
-      console.log(pageCount)
+      pageCount = xPagination.pageCount      
       return respond.json()
     })
     .then(page => ({ type: A.FETCH_SHOWS_SUCCESS, payload: { page, pageCount } }))
@@ -36,7 +35,7 @@ const fetchThenDispatch = (dispatch, url, init) => {
 }
 
 export const getPage = (sort = S.WATCHED, page = 1, limit = 10) => dispatch => {
-  const parameters = `page=${page}&limit=${limit}`
+  const parameters = `extended=full&page=${page}&limit=${limit}`
   const url = `https://api.trakt.tv/shows/${sort}/all?${parameters}`
   return fetchThenDispatch(
     dispatch,
