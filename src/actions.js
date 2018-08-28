@@ -12,12 +12,28 @@ const myInit = {
   }),
 }
 
-const fetchThenDispatch = (dispatch, url, init) =>
-  fetch(url, init)
-    .then(response => response.json())
-    .then(data => ({ type: A.SWOWS_LOADED, data }))
+const parseXPaginationHeaders = headers => ({
+  page: headers.get('X-Pagination-Page'),
+  limit: headers.get('X-Pagination-Limit'),
+  pageCount: headers.get('X-Pagination-Page-Count'),
+  itemCount: headers.get('X-Pagination-Item-Count')
+})
+
+const fetchThenDispatch = (dispatch, url, init) => {
+  let pageCount = 0
+
+  dispatch({ type: A.FETCH_SHOWS_REQUEST })
+  return fetch(url, init)
+    .then(respond => {
+      const xPagination = parseXPaginationHeaders(respond.headers)
+      pageCount = parseInt(xPagination.pageCount, 10)
+      console.log(pageCount)
+      return respond.json()
+    })
+    .then(page => ({ type: A.FETCH_SHOWS_SUCCESS, payload: { page, pageCount } }))
     .then(dispatch)
     .catch(error => console.error(error))
+}
 
 export const getPage = (sort = S.WATCHED, page = 1, limit = 10) => dispatch => {
   const parameters = `page=${page}&limit=${limit}`
@@ -28,9 +44,3 @@ export const getPage = (sort = S.WATCHED, page = 1, limit = 10) => dispatch => {
     myInit
   )
 }
-
-// Насколько я понимаю...
-// 1) обработчик События вызывает Генератор Действий...
-// 2) асинхронный Генератор Действий инициирует Обещание, которое возвращает Действие...
-// 3) Действие попадает в Преобразователь через .then(dispatch)...
-// 4) отрабатывает привязка свойств в `connect()`, где данные из общего `state` перекидываются в `props` компонента?!

@@ -17,15 +17,16 @@ class Shows extends Component {
       sort !== params.sort
   }
 
-  componentDidUpdate({ match }) {
+  componentDidUpdate(prevProps) {
     const { onRelocation } = this.props
     const { sort, page } = this.props.match.params
-    if (this.isParamsCanged(match.params))
+    if (this.isParamsCanged(prevProps.match.params))
       onRelocation(sort, page)
   }
 
   render() {
-    const { match, history, data, onSort, onRelocation } = this.props
+    const { history, shows } = this.props
+    const { page } = shows
 
     return (
       <table className='table table-striped'>
@@ -41,7 +42,7 @@ class Shows extends Component {
         </thead>
         <tbody>
           {
-            data.map((item, index) =>
+            page.map((item, index) =>
               <ShowRow
                 key={index}
                 data={item}
@@ -57,11 +58,7 @@ class Shows extends Component {
 Shows.propTypes = {
   onRelocation: PropTypes.func.isRequired,
   onSort: PropTypes.func.isRequired,
-  data: PropTypes.array.isRequired
-}
-
-Shows.defaultProps = {
-  data: []
+  shows: PropTypes.object.isRequired
 }
 
 export default Shows

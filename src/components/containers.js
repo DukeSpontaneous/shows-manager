@@ -1,16 +1,13 @@
 import { connect } from 'react-redux'
 import ShowTable from './ui/ShowTable'
+import Pagination from './ui/Pagination'
 
 import { getPage } from '../actions'
 
 export const Shows = connect(
-  (state, { match }) => {
-    const { data } = state
-    const { sort, page } = match.params
-    return {
-      data
-    }
-  },
+  ({ shows }, { match }) => ({
+    shows
+  }),
   dispatch => ({
     onRelocation(sort, page) {
       dispatch(getPage(sort, page))
@@ -20,3 +17,10 @@ export const Shows = connect(
     }
   })
 )(ShowTable)
+
+export const Pages = connect(
+  ({ shows }, { match }) => ({
+    pageCount: shows.pageCount,
+    shows
+  })
+)(Pagination)

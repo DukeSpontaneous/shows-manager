@@ -1,8 +1,7 @@
 import React from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
-import Pagination from './ui/Pagination'
 import Whoops404 from './ui/Whoops404'
-import { Shows } from "./containers"
+import { Shows, Pages } from "./containers"
 import './App.css'
 
 const App = () => {
@@ -13,7 +12,7 @@ const App = () => {
         <Route path="/:sort/:page" component={Shows} />
         <Route component={Whoops404} />
       </Switch>
-      <Pagination />
+      <Route path="/:sort/:page" component={Pages} />
     </div>
   )
 }
