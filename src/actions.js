@@ -19,6 +19,9 @@ const parseXPaginationHeaders = headers => ({
   itemCount: parseInt(headers.get('X-Pagination-Item-Count'), 10)
 })
 
+const fetchSuccess = payload =>
+  ({ type: A.FETCH_SHOWS_SUCCESS, payload })
+
 const fetchThenDispatch = (dispatch, url, init) => {
   let pageCount = 0
 
@@ -26,10 +29,10 @@ const fetchThenDispatch = (dispatch, url, init) => {
   return fetch(url, init)
     .then(respond => {
       const xPagination = parseXPaginationHeaders(respond.headers)
-      pageCount = xPagination.pageCount      
+      pageCount = xPagination.pageCount
       return respond.json()
     })
-    .then(page => ({ type: A.FETCH_SHOWS_SUCCESS, payload: { page, pageCount } }))
+    .then(page => fetchSuccess({ page, pageCount }))
     .then(dispatch)
     .catch(error => console.error(error))
 }
