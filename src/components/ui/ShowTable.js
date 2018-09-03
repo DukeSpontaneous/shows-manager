@@ -2,7 +2,7 @@ import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import ShowRow from './ShowRow'
 import { SORTS as S } from '../../constants'
-import './showTable.css'
+import { table } from './showTable.css'
 
 class Shows extends Component {
   componentDidMount() {
@@ -24,8 +24,8 @@ class Shows extends Component {
       onRelocation(sort, page)
   }
 
-  makeRelocator(history, target) {
-    return () => history.push(`/${target}/1`)
+  makeRelocator(history, sort) {
+    return () => history.push(`/${sort}/1`)
   }
 
   render() {
@@ -33,7 +33,7 @@ class Shows extends Component {
     const { page } = shows
 
     return (
-      <table className='table table-striped'>
+      <table className={table}>
         <thead>
           <tr>
             <th>title</th>

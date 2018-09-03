@@ -13,22 +13,25 @@ const Pagination = ({ history, match, pageCount, shows }) => {
     <div>
       {
         n > 4 ?
-          <button onClick={() => history.push(`/${sort}/1`)}>{`<<`}</button> : ``
+          <button onClick={makeRelocator(history, sort, 1)}>{`<<`}</button> : ``
       }
       {
-        prePages.map((num, index) => <button onClick={() => history.push(`/${sort}/${num}`)} key={index}>{num}</button>)
+        prePages.map((num, index) => <button onClick={makeRelocator(history, sort, num)} key={index}>{num}</button>)
       }
-      {page}
+      <button disabled>{page}</button>
       {
-        nextPages.map((num, index) => <button onClick={() => history.push(`/${sort}/${num}`)} key={index}>{num}</button>)
+        nextPages.map((num, index) => <button onClick={makeRelocator(history, sort, num)} key={index}>{num}</button>)
       }
       {
         n < pageCount - 3 ?
-          <button onClick={() => history.push(`/${sort}/${pageCount}`)}>{`>>`}</button> : ``
+          <button onClick={makeRelocator(history, sort, pageCount)}>{`>>`}</button> : ``
       }
     </div>
   )
 }
+
+const makeRelocator = (history, sort, page) =>
+  () => history.push(`/${sort}/${page}`)
 
 Pagination.propTypes = {
   pageCount: PropTypes.number.isRequired,

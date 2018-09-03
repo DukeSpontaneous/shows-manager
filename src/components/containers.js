@@ -1,6 +1,7 @@
 import { connect } from 'react-redux'
 import ShowTable from './ui/ShowTable'
 import Pagination from './ui/Pagination'
+import ShowDescription from './ui/ShowDescription'
 
 import { getPage } from '../actions'
 
@@ -24,3 +25,8 @@ export const Pages = connect(
     shows
   })
 )(Pagination)
+
+export const Show = connect(
+  (proos, state) => ({
+  })
+)(ShowDescription)
