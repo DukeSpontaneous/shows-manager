@@ -2,9 +2,11 @@ import { combineReducers } from 'redux'
 import { ACTIONS as A } from '../constants'
 
 const initialShows = {
-  showsRequestInProgress: false,
-  fetchShowsSuccess: false,
-  fetchShowsFailure: false,
+  fetchShows: {
+    loading: false,
+    success: false,
+    failure: false
+  },
   page: [],
   pageCount: 0
 }
@@ -14,25 +16,31 @@ const shows = (state = initialShows, { type, payload } = { type: null }) => {
     case A.FETCH_SHOWS_REQUEST:
       return {
         ...state,
-        showsRequestInProgress: true,
-        fetchShowsSuccess: false,
-        fetchShowsFailure: false
+        fetchShows: {
+          loading: true,
+          success: false,
+          failure: false
+        }
       }
     case A.FETCH_SHOWS_SUCCESS:
       return {
         ...state,
-        showsRequestInProgress: false,
-        fetchShowsSuccess: true,
-        fetchShowsFailure: false,
+        fetchShows: {
+          loading: false,
+          success: true,
+          failure: false
+        },
         page: payload.page,
         pageCount: payload.pageCount
       }
     case A.FETCH_SHOWS_FAILURE:
       return {
         ...state,
-        showsRequestInProgress: false,
-        fetchShowsSuccess: false,
-        fetchShowsFailure: true,
+        fetchShows: {
+          loading: false,
+          success: false,
+          failure: true
+        },
         page: [],
         pageCount: 0
       }

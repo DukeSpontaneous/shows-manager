@@ -12,9 +12,6 @@ export const Shows = connect(
   dispatch => ({
     onRelocation(sort, page) {
       dispatch(getPage(sort, page))
-    },
-    onSort(sort) {
-      dispatch(getPage(sort, 1))
     }
   })
 )(ShowTable)

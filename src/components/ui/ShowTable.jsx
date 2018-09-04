@@ -61,7 +61,6 @@ class Shows extends Component {
 
 Shows.propTypes = {
   onRelocation: PropTypes.func.isRequired,
-  onSort: PropTypes.func.isRequired,
   shows: PropTypes.object.isRequired
 }
 

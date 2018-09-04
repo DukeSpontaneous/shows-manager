@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types'
 import React from 'react'
+import { withRouter } from 'react-router'
 
-const ShowRow = ({ data }) =>
-  <tr>
+const ShowRow = ({ data, history }) =>
+  <tr onClick={() => history.push(`${history.location.pathname}/${data.show.ids.tvdb}`)}>
     <td>{data.show.title}</td>
     <td>{data.show.year}</td>
     <td>{data.watcher_count}</td>
@@ -12,7 +13,8 @@ const ShowRow = ({ data }) =>
   </tr>
 
 ShowRow.propTypes = {
-  data: PropTypes.object.isRequired
+  data: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 }
 
-export default ShowRow
+export default withRouter(ShowRow)
