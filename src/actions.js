@@ -46,3 +46,25 @@ export const getPage = (sort = S.WATCHED, page = 1, limit = 10) => dispatch => {
     traktInit
   )
 }
+
+
+const onPosterSuccess = payload =>
+  ({ type: A.FETCH_POSTER_SUCCESS, payload })
+
+const fetchPosterThenDispatch = (dispatch, url, init) => {
+  dispatch({ type: A.FETCH_POSTER_REQUEST })
+  return fetch(url, init)
+    .then(respond => respond.json())
+    .then(payload => onPosterSuccess(payload))
+    .then(dispatch)
+    .catch(error => console.error(error))
+}
+
+export const getPoster = tvdb => dispatch => {
+  const parameters = `api_key={${K.FANART}}`
+  const url = `https://webservice.fanart.tv/v3/tv/${tvdb}?${parameters}`
+  return fetchPosterThenDispatch(
+    dispatch,
+    url
+  )
+}

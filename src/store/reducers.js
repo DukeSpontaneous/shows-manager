@@ -49,6 +49,52 @@ const shows = (state = initialShows, { type, payload } = { type: null }) => {
   }
 }
 
+const initialPoster = {
+  fetchPoster: {
+    loading: false,
+    success: false,
+    failure: false
+  },
+  url: ``
+}
+
+const poster = (state = initialPoster, { type, payload } = { type: null }) => {
+  switch (type) {
+    case A.FETCH_POSTER_REQUEST:
+      return {
+        ...state,
+        fetchPoster: {
+          loading: true,
+          success: false,
+          failure: false
+        },
+      }
+    case A.FETCH_POSTER_SUCCESS:
+      return {
+        ...state,
+        fetchPoster: {
+          loading: false,
+          success: true,
+          failure: false
+        },
+        url: payload.tvposter.length > 0 ? payload.tvposter[0].url : ``
+      }
+    case A.FETCH_POSTER_FAILURE:
+      return {
+        ...state,
+        fetchPoster: {
+          loading: false,
+          success: false,
+          failure: true
+        },
+        url: ``
+      }
+    default:
+      return state
+  }
+}
+
 export default combineReducers({
-  shows
+  shows,
+  poster
 })

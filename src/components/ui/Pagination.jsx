@@ -1,7 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
 
-const Pagination = ({ history, match, pageCount, shows }) => {
+const Pagination = ({ history, match, pageCount }) => {
   const { sort, page } = match.params
   const n = parseInt(page, 10)
   const prePages = [n - 3, n - 2, n - 1]
@@ -34,8 +35,11 @@ const makeRelocator = (history, sort, page) =>
   () => history.push(`/${sort}/${page}`)
 
 Pagination.propTypes = {
-  pageCount: PropTypes.number.isRequired,
-  shows: PropTypes.object.isRequired
+  pageCount: PropTypes.number.isRequired
 }
 
-export default Pagination
+export default connect(
+  ({ shows }, { match }) => ({
+    pageCount: shows.pageCount
+  })
+)(Pagination)

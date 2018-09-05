@@ -16,3 +16,15 @@
   top: 16px;
   right: 16px;
 }
+
+.description {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: stretch;
+  padding: 20px;
+}
+
+.imageStyle {
+  height: 80vh;
+}

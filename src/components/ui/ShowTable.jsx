@@ -1,6 +1,9 @@
-import PropTypes from 'prop-types'
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+
 import ShowRow from './ShowRow'
+import { getPage } from '../../actions'
 import { SORTS as S } from '../../constants'
 import { table } from './showTable.css'
 
@@ -18,7 +21,7 @@ class Shows extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { onRelocation } = this.props
+    const { onRelocation, shows } = this.props
     const { sort, page } = this.props.match.params
     if (this.isParamsCanged(prevProps.match.params))
       onRelocation(sort, page)
@@ -48,6 +51,7 @@ class Shows extends Component {
           {
             page.map((item, index) =>
               <ShowRow
+                id={index}
                 key={index}
                 data={item}
               />
@@ -64,4 +68,13 @@ Shows.propTypes = {
   shows: PropTypes.object.isRequired
 }
 
-export default Shows
+export default connect(
+  ({ shows }) => ({
+    shows
+  }),
+  dispatch => ({
+    onRelocation(sort, page) {
+      dispatch(getPage(sort, page))
+    }
+  })
+)(Shows)
