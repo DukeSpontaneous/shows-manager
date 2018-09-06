@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
-import { getPage, getPoster } from '../../actions'
+import { loadPage, loadPoster } from '../../actions'
 import {
   modal,
   closeButton,
@@ -65,7 +65,7 @@ export default Modal(connect(
   }),
   dispatch => ({
     onPosterNeeded(tvdb) {
-      dispatch(getPoster(tvdb))
+      dispatch(loadPoster(tvdb))
     }
   })
 )(withRouter(ShowDescription)))

@@ -12,7 +12,7 @@ export const SORTS = {
   TRENDING: `trending`,
   PLAYED: `played`,
   WATCHED: `watched`,
-  COLLECTED: `collected`
+  COLLECTED: `collected`,
 }
 
 export const API_KEYS = {

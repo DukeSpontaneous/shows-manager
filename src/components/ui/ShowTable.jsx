@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import ShowRow from './ShowRow'
-import { getPage } from '../../actions'
+import { loadPage } from '../../actions'
 import { SORTS as S } from '../../constants'
 import { table } from './showTable.css'
 
@@ -52,7 +52,7 @@ class Shows extends Component {
             page.map((item, index) =>
               <ShowRow
                 id={index}
-                key={index}
+                key={item.show.ids.trakt}
                 data={item}
               />
             )
@@ -74,7 +74,7 @@ export default connect(
   }),
   dispatch => ({
     onRelocation(sort, page) {
-      dispatch(getPage(sort, page))
+      dispatch(loadPage(sort, page))
     }
   })
 )(Shows)
