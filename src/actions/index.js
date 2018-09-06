@@ -1,5 +1,4 @@
 import {
-  SORTS as S,
   ACTIONS as A
 } from '../constants'
 

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
-import { loadPage, loadPoster } from '../../actions'
+import { loadPoster } from '../../actions'
 import {
   modal,
   closeButton,

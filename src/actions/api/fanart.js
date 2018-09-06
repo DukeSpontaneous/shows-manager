@@ -7,4 +7,5 @@ export const getPoster = tvdb => {
   const url = `https://webservice.fanart.tv/v3/tv/${tvdb}?${parameters}`
   return fetch(url)
     .then(respond => respond.json())
+    .then(payload => payload.tvposter.length > 0 ? payload.tvposter[0].url : ``)
 }

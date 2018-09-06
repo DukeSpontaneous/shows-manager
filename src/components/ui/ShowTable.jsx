@@ -21,7 +21,7 @@ class Shows extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    const { onRelocation, shows } = this.props
+    const { onRelocation } = this.props
     const { sort, page } = this.props.match.params
     if (this.isParamsCanged(prevProps.match.params))
       onRelocation(sort, page)

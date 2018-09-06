@@ -77,7 +77,7 @@ const poster = (state = initialPoster, { type, payload } = { type: null }) => {
           success: true,
           failure: false
         },
-        url: payload.tvposter.length > 0 ? payload.tvposter[0].url : ``
+        url: payload
       }
     case A.FETCH_POSTER_FAILURE:
       return {

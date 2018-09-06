@@ -1,5 +1,4 @@
 import {
-  SORTS as S,
   API_KEYS as K
 } from '../../constants'
 
@@ -19,7 +18,7 @@ const init = {
   }),
 }
 
-export const getPage = (sort = S.WATCHED, page = 1, limit = 10) => {
+export const getPage = (sort, page, limit) => {
   const parameters = `extended=full&page=${page}&limit=${limit}`
   const url = `https://api.trakt.tv/shows/${sort}/all?${parameters}`
 
