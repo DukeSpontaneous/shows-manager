@@ -10,23 +10,21 @@ import { loadPage } from '../../actions'
 import { SORTS as S } from '../../constants'
 
 class Shows extends Component {
-  componentDidMount() {
-    const { match, onRelocation } = this.props
-    const { sort, page } = match.params
-    onRelocation(sort, page)
+  constructor(props) {
+    super(props)
+    this.state = { sort: null, list: null }
   }
 
-  isParamsCanged(params) {
-    const { sort, page } = this.props.match.params
-    return page !== params.page ||
-      sort !== params.sort
-  }
+  static getDerivedStateFromProps(nextProps, prevState) {
+    const { onRelocation, match } = nextProps
+    const { sort: nSort, page: nPage } = match.params
+    const { sort: pSort, page: pPage } = prevState
 
-  componentDidUpdate(prevProps) {
-    const { onRelocation } = this.props
-    const { sort, page } = this.props.match.params
-    if (this.isParamsCanged(prevProps.match.params))
-      onRelocation(sort, page)
+    if (nSort !== pSort || nPage !== pPage) {
+      onRelocation(nSort, nPage)
+      return { sort: nSort, page: nPage }
+    }
+    return null
   }
 
   makeRelocator(history, sort) {
@@ -35,7 +33,7 @@ class Shows extends Component {
 
   render() {
     const { history, shows } = this.props
-    const { page, fetchShows } = shows
+    const { list, fetchShows } = shows
 
     return (
       <table className={table}>
@@ -53,7 +51,7 @@ class Shows extends Component {
           {
             fetchShows.loading ?
               <PlaceholderRow /> :
-              page.map((item, index) =>
+              list.map((item, index) =>
                 <ShowRow
                   id={index}
                   key={item.show.ids.trakt}

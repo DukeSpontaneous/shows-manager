@@ -7,8 +7,9 @@ const initialShows = {
     success: false,
     failure: false
   },
-  page: [],
-  pageCount: 0
+  list: [],
+  headers: { pageCount: 0 },
+  sort: ``
 }
 
 const shows = (state = initialShows, { type, payload } = { type: null }) => {
@@ -30,8 +31,7 @@ const shows = (state = initialShows, { type, payload } = { type: null }) => {
           success: true,
           failure: false
         },
-        page: payload.page,
-        pageCount: payload.pageCount
+        ...payload
       }
     case A.FETCH_SHOWS_FAILURE:
       console.error(payload.error)
@@ -42,8 +42,8 @@ const shows = (state = initialShows, { type, payload } = { type: null }) => {
           success: false,
           failure: true
         },
-        page: [],
-        pageCount: 0
+        list: [],
+        headers: {}
       }
     default:
       return state
@@ -78,7 +78,7 @@ const poster = (state = initialPoster, { type, payload } = { type: null }) => {
           success: true,
           failure: false
         },
-        url: payload
+        ...payload
       }
     case A.FETCH_POSTER_FAILURE:
       console.error(payload.error)

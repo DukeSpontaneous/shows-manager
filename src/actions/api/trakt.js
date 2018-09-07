@@ -22,11 +22,11 @@ export const getPage = (sort, page, limit) => {
   const parameters = `extended=full&page=${page}&limit=${limit}`
   const url = `https://api.trakt.tv/shows/${sort}/all?${parameters}`
 
-  let pageCount = 0
+  let headers = {}
   return fetch(url, init)
     .then(respond => {
-      pageCount = parseXPaginationHeaders(respond.headers).pageCount
+      headers = parseXPaginationHeaders(respond.headers)
       return respond.json()
     })
-    .then(page => ({ page, pageCount }))
+    .then(list => ({ sort, list, headers }))
 }

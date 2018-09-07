@@ -40,6 +40,6 @@ Pagination.propTypes = {
 
 export default connect(
   ({ shows }, { match }) => ({
-    pageCount: shows.pageCount
+    pageCount: shows.headers.pageCount
   })
 )(Pagination)
