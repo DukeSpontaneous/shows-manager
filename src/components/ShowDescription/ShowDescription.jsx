@@ -46,7 +46,10 @@ class ShowDescription extends Component {
           <p>{show.overview}</p>
         </div>
 
-        <img className={imageStyle} src={url === `` ? `https://s.imgur.com/images/404/giraffeweyes.png` : url} />
+        <img className={imageStyle}
+         src={url === `` ? `https://s.imgur.com/images/404/giraffeweyes.png` : url}
+         alt="Poster"
+         />
 
       </div>
     )

@@ -1,10 +1,10 @@
 import React from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 
-import ShowTable from './ui/ShowTable'
-import ShowDescription from './ui/ShowDescription'
-import Pagination from './ui/Pagination'
-import Whoops404 from './ui/Whoops404'
+import Pagination from './Pagination'
+import ShowDescription from './ShowDescription'
+import ShowTable from './ShowTable'
+import Whoops404 from './Whoops404'
 
 import { app } from './app.css'
 

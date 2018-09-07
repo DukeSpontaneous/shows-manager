@@ -34,6 +34,7 @@ const shows = (state = initialShows, { type, payload } = { type: null }) => {
         pageCount: payload.pageCount
       }
     case A.FETCH_SHOWS_FAILURE:
+      console.error(payload.error)
       return {
         ...state,
         fetchShows: {
@@ -80,6 +81,7 @@ const poster = (state = initialPoster, { type, payload } = { type: null }) => {
         url: payload
       }
     case A.FETCH_POSTER_FAILURE:
+      console.error(payload.error)
       return {
         ...state,
         fetchPoster: {

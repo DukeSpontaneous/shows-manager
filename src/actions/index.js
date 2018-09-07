@@ -5,30 +5,24 @@ import {
 import { getPage } from './api/trakt'
 import { getPoster } from './api/fanart'
 
-export const loadPage = (sort, page, limit) => dispatch => {
-  dispatch({ type: A.FETCH_SHOWS_REQUEST })
-  return getPage(sort, page, limit)
-    .then(payload => onShowsSuccess(payload))
-    .then(dispatch)
-    .catch(error => console.error(error))
-}
+const createAction = (type, payload) => ({ type, payload })
 
-const onShowsSuccess = payload =>
-  ({
-    type: A.FETCH_SHOWS_SUCCESS,
-    payload
-  })
+export const loadPage = (sort, page, limit) => dispatch => {
+  dispatch(createAction(A.FETCH_SHOWS_REQUEST))
+  return getPage(sort, page, limit)
+    .then(payload => createAction(A.FETCH_SHOWS_SUCCESS, payload))
+    .then(dispatch)
+    .catch(error => dispatch(
+      createAction(A.FETCH_SHOWS_FAILURE, { error })
+    ))
+}
 
 export const loadPoster = tvdb => dispatch => {
-  dispatch({ type: A.FETCH_POSTER_REQUEST })
+  dispatch(createAction(A.FETCH_POSTER_REQUEST))
   return getPoster(tvdb)
-    .then(payload => onPosterSuccess(payload))
+    .then(payload => createAction(A.FETCH_POSTER_SUCCESS, payload))
     .then(dispatch)
-    .catch(error => console.error(error))
+    .catch(error => dispatch(
+      createAction(A.FETCH_POSTER_FAILURE, { error })
+    ))
 }
-
-const onPosterSuccess = payload =>
-  ({
-    type: A.FETCH_POSTER_SUCCESS,
-    payload
-  })
