@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
 import { loadPoster } from '../../actions'
+import Loader from '../Loader'
 import {
   modal,
   closeButton,
@@ -34,7 +35,7 @@ class ShowDescription extends Component {
 
   render() {
     const { shows, poster, match } = this.props;
-    const { url } = poster
+    const { url, fetchPoster } = poster
     const { rowId } = match.params
     const show = shows.page[rowId].show
 
@@ -46,11 +47,14 @@ class ShowDescription extends Component {
           <p>{show.overview}</p>
         </div>
 
-        <img className={imageStyle}
-         src={url === `` ? `https://s.imgur.com/images/404/giraffeweyes.png` : url}
-         alt="Poster"
-         />
-
+        {
+          fetchPoster.loading ?
+            <Loader /> :
+            <img className={imageStyle}
+              src={url}
+              alt="Poster"
+            />
+        }
       </div>
     )
   }

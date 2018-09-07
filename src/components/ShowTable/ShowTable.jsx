@@ -3,9 +3,11 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import ShowRow from './ShowRow'
+import PlaceholderRow from './PlaceholderRow'
+import { table } from './showTable.css'
+
 import { loadPage } from '../../actions'
 import { SORTS as S } from '../../constants'
-import { table } from './showTable.css'
 
 class Shows extends Component {
   componentDidMount() {
@@ -33,29 +35,31 @@ class Shows extends Component {
 
   render() {
     const { history, shows } = this.props
-    const { page } = shows
+    const { page, fetchShows } = shows
 
     return (
       <table className={table}>
         <thead>
           <tr>
-            <th>title</th>
-            <th>year</th>
-            <th onClick={this.makeRelocator(history, S.WATCHED)}>watcher_count</th>
-            <th onClick={this.makeRelocator(history, S.PLAYED)}>play_count</th>
-            <th>collected_count</th>
-            <th onClick={this.makeRelocator(history, S.COLLECTED)}>collector_count</th>
+            <th>Title</th>
+            <th>Year</th>
+            <th onClick={this.makeRelocator(history, S.WATCHED)}>Watchers</th>
+            <th onClick={this.makeRelocator(history, S.PLAYED)}>Played</th>
+            <th>Collected</th>
+            <th onClick={this.makeRelocator(history, S.COLLECTED)}>Collectors</th>
           </tr>
         </thead>
         <tbody>
           {
-            page.map((item, index) =>
-              <ShowRow
-                id={index}
-                key={item.show.ids.trakt}
-                data={item}
-              />
-            )
+            fetchShows.loading ?
+              <PlaceholderRow /> :
+              page.map((item, index) =>
+                <ShowRow
+                  id={index}
+                  key={item.show.ids.trakt}
+                  data={item}
+                />
+              )
           }
         </tbody>
       </table>
