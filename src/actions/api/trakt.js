@@ -28,5 +28,18 @@ export const getPage = (sort, page, limit) => {
       headers = parseXPaginationHeaders(respond.headers)
       return respond.json()
     })
-    .then(list => ({ sort, list, headers }))
+    .then(list => ({ category: `shows`, ptr: sort, list, headers }))
+}
+
+export const searchShows = (query, page, limit) => {
+  const parameters = `extended=full&page=${page}&limit=${limit}&query=${query}`
+  const url = `https://api.trakt.tv/search/show?${parameters}`
+
+  let headers = {}
+  return fetch(url, init)
+    .then(respond => {
+      headers = parseXPaginationHeaders(respond.headers)
+      return respond.json()
+    })
+    .then(list => ({ category: `search`, ptr: query, list, headers }))
 }

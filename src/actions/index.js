@@ -2,14 +2,22 @@ import {
   ACTIONS as A
 } from '../constants'
 
-import { getPage } from './api/trakt'
+import { getPage, searchShows } from './api/trakt'
 import { getPoster } from './api/fanart'
 
 const createAction = (type, payload) => ({ type, payload })
 
-export const loadPage = (sort, page, limit) => dispatch => {
+export const loadSortedPage = (sort, page, limit) => dispatch => {
   dispatch(createAction(A.FETCH_SHOWS_REQUEST))
   return getPage(sort, page, limit)
+    .then(payload => createAction(A.FETCH_SHOWS_SUCCESS, payload))
+    .catch(error => createAction(A.FETCH_SHOWS_FAILURE, { error }))
+    .then(dispatch)
+}
+
+export const loadQueryPage = (query, page, limit) => dispatch => {
+  dispatch(createAction(A.FETCH_SHOWS_REQUEST))
+  return searchShows(query, page, limit)
     .then(payload => createAction(A.FETCH_SHOWS_SUCCESS, payload))
     .catch(error => createAction(A.FETCH_SHOWS_FAILURE, { error }))
     .then(dispatch)

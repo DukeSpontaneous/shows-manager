@@ -1,7 +1,6 @@
 import React from 'react'
 import { Route, Switch, Redirect } from 'react-router-dom'
 
-import Pagination from './Pagination'
 import ShowDescription from './ShowDescription'
 import ShowTable from './ShowTable'
 import Whoops404 from './Whoops404'
@@ -16,12 +15,11 @@ const App = () =>
     <main>
       <div>
         <Switch>
-          <Redirect exact from="/" to="/watched/1" />
-          <Route path="/:sort/:page" component={ShowTable} />
+          <Redirect exact from="/" to="/shows/watched/1" />
+          <Route path="/:category/:ptr/:page" component={ShowTable} />
           <Route component={Whoops404} />
         </Switch>
-        <Route path="/:sort/:page" component={Pagination} />
-        <Route path="/:sort/:page/:rowId" component={ShowDescription} />
+        <Route path="/:category/:ptr/:page/:rowId" component={ShowDescription} />
       </div>
     </main>
   </div>

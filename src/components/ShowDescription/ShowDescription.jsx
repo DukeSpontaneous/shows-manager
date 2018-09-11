@@ -9,8 +9,8 @@ import Loader from '../Loader'
 import { modal, closeButton, imageStyle, description } from './showDescription.css'
 
 const Modal = ({ children, history, match }) => {
-  const { sort, page } = match.params
-  const url = `/${sort}/${page}`
+  const { category, ptr, page } = match.params
+  const url = `/${category}/${ptr}/${page}`
   return ReactDOM.createPortal(
     <div className={modal}>
       <button className={closeButton} onClick={() => history.push(url)}>Close</button>
@@ -29,10 +29,10 @@ class ShowDescription extends Component {
   static getDerivedStateFromProps(nextProps, prevState) {
     const { onPosterNeeded, match, shows } = nextProps
     const { headers } = shows
-    const { sort } = match.params
+    const { category, ptr } = match.params
     const page = parseInt(match.params.page, 10)
     const nRowId = parseInt(match.params.rowId, 10)
-    if (sort !== shows.sort || page !== headers.page)
+    if (category !== shows.category || ptr !== shows.ptr || page !== headers.page)
       return { rowId: -1 }
 
     const { rowId: pRowId } = prevState
@@ -79,7 +79,10 @@ class ShowDescription extends Component {
 }
 
 ShowDescription.propTypes = {
+  history: PropTypes.object.isRequired,
+  match: PropTypes.object.isRequired,
   onPosterNeeded: PropTypes.func.isRequired,
+  shows: PropTypes.object.isRequired,
   poster: PropTypes.object.isRequired
 }
 

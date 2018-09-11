@@ -9,7 +9,8 @@ const initialShows = {
   },
   list: [],
   headers: { pageCount: 0 },
-  sort: ``
+  category: ``,
+  ptr: ``
 }
 
 const shows = (state = initialShows, { type, payload } = { type: null }) => {
@@ -43,7 +44,8 @@ const shows = (state = initialShows, { type, payload } = { type: null }) => {
           failure: true
         },
         list: [],
-        headers: {}
+        headers: {},
+        ptr: ``
       }
     default:
       return state
