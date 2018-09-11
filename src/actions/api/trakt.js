@@ -1,5 +1,5 @@
 import {
-  API_KEYS as K
+  API_KEYS as K, CATEGORIES as CTG
 } from '../../constants'
 
 const parseXPaginationHeaders = headers => ({
@@ -28,7 +28,7 @@ export const getPage = (sort, page, limit) => {
       headers = parseXPaginationHeaders(respond.headers)
       return respond.json()
     })
-    .then(list => ({ category: `shows`, ptr: sort, list, headers }))
+    .then(list => ({ category: CTG.SHOWS, ptr: sort, list, headers }))
 }
 
 export const searchShows = (query, page, limit) => {
@@ -41,5 +41,5 @@ export const searchShows = (query, page, limit) => {
       headers = parseXPaginationHeaders(respond.headers)
       return respond.json()
     })
-    .then(list => ({ category: `search`, ptr: query, list, headers }))
+    .then(list => ({ category: CTG.SEARCH, ptr: query, list, headers }))
 }

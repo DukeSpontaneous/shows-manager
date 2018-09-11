@@ -8,6 +8,11 @@ export const ACTIONS = {
   FETCH_POSTER_FAILURE: `FETCH_POSTER_FAILURE`,
 }
 
+export const CATEGORIES = {
+  SHOWS: `shows`,
+  SEARCH: `search`,
+}
+
 export const SORTS = {
   TRENDING: `trending`,
   PLAYED: `played`,

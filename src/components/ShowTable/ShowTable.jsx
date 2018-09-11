@@ -2,16 +2,13 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import Pagination from '../Pagination'
-import SearchShows from '../SearchShows'
-
 import PlaceholderRow from './PlaceholderRow'
 import ShowRow from './ShowRow'
 
 import { table } from './showTable.css'
 
 import { loadSortedPage, loadQueryPage } from '../../actions'
-import { SORTS as S } from '../../constants'
+import { CATEGORIES as CTG, SORTS as S } from '../../constants'
 
 class Shows extends Component {
   constructor(props) {
@@ -31,9 +28,8 @@ class Shows extends Component {
     return null
   }
 
-  makeRelocator = (history) => ptr => {
-    return () => history.push(`/shows/${ptr}/1`)
-  }
+  makeRelocator = history => ptr =>
+    () => history.push(`/shows/${ptr}/1`)
 
   render() {
     const { history, shows } = this.props
@@ -42,7 +38,6 @@ class Shows extends Component {
     const relocator = this.makeRelocator(history)
     return (
       <div>
-        <SearchShows />
         <table className={table}>
           <thead>
             <tr>
@@ -68,7 +63,6 @@ class Shows extends Component {
             }
           </tbody>
         </table>
-        <Pagination />
       </div>
     )
   }
@@ -80,11 +74,6 @@ Shows.propTypes = {
   shows: PropTypes.object.isRequired
 }
 
-const CATEGORY = {
-  SHOWS: `shows`,
-  SEARCH: `search`
-}
-
 export default connect(
   ({ shows }) => ({
     shows
@@ -93,10 +82,10 @@ export default connect(
     onRelocation(match) {
       const { category, ptr, page } = match.params
       switch (category) {
-        case CATEGORY.SHOWS:
+        case CTG.SHOWS:
           dispatch(loadSortedPage(ptr, page))
           break
-        case CATEGORY.SEARCH:
+        case CTG.SEARCH:
           dispatch(loadQueryPage(ptr, page))
           break
         default:
