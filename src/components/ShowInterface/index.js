@@ -1,2 +1,2 @@
-import ShowIntarfece from './ShowIntarfece'
-export default ShowIntarfece
+import ShowInterface from './ShowInterface'
+export default ShowInterface

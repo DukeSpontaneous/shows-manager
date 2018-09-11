@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router'
 
 import PlaceholderRow from './PlaceholderRow'
 import ShowRow from './ShowRow'
@@ -74,7 +75,7 @@ Shows.propTypes = {
   shows: PropTypes.object.isRequired
 }
 
-export default connect(
+export default withRouter(connect(
   ({ shows }) => ({
     shows
   }),
@@ -93,4 +94,4 @@ export default connect(
       }
     }
   })
-)(Shows)
+)(Shows))

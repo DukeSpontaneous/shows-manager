@@ -86,7 +86,7 @@ ShowDescription.propTypes = {
   poster: PropTypes.object.isRequired
 }
 
-export default connect(
+export default withRouter(connect(
   ({ shows, poster }) => ({
     shows,
     poster
@@ -96,4 +96,4 @@ export default connect(
       dispatch(loadPoster(tvdb))
     }
   })
-)(withRouter(ShowDescription))
+)(ShowDescription))
