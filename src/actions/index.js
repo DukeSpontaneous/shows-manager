@@ -1,6 +1,4 @@
-import {
-  ACTIONS as A
-} from '../constants'
+import { ACTIONS as A } from '../constants'
 
 import { getPage, searchShows } from './api/trakt'
 import { getPoster } from './api/fanart'
