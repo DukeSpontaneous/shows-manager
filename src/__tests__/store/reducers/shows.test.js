@@ -15,6 +15,14 @@ const initialShows = {
 }
 
 describe('shows reducer', () => {
+  const errorCopy = console.error
+  beforeAll(() => {
+    console.error = () => { }
+  })
+  afterAll(() => {
+    console.error = errorCopy
+  })
+
   it('loading state', () => {
     const action = { type: A.FETCH_SHOWS_REQUEST }
     const result = shows(initialShows, action).fetchShows

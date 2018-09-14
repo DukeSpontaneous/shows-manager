@@ -12,6 +12,14 @@ const initialPoster = {
 }
 
 describe('poster reducer', () => {
+  const errorCopy = console.error
+  beforeAll(() => {
+    console.error = () => { }
+  })
+  afterAll(() => {
+    console.error = errorCopy
+  })
+
   it('loading state', () => {
     const action = { type: A.FETCH_POSTER_REQUEST }
     const result = poster(initialPoster, action).fetchPoster
