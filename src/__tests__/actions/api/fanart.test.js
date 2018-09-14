@@ -1,5 +1,3 @@
-import POSTER_SAMPLE from '../../../actions/api/__mocks__/samples/poster.json'
-
 import storeFactory from '../../../store'
 import { loadPoster } from '../../../actions'
 
@@ -11,7 +9,7 @@ describe('fanart api', () => {
   const realFetch = global.fetch
   const mockFetch = jest.fn().mockReturnValue(
     Promise.resolve({
-      json: () => Promise.resolve(POSTER_SAMPLE)
+      json: () => Promise.resolve(global._poster)
     })
   )
 
