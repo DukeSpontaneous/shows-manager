@@ -11,7 +11,7 @@ describe('<Whoops404 /> UI Component', () => {
         .length
     ).toBe(2)
   )
-  it('contain three children Whoops404', () =>
+  it('contain three children', () =>
     expect(
       shallow(<Whoops404 location={{ pathname: 'test' }} />)
         .find('h1')

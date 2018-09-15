@@ -8,16 +8,28 @@ import { loadPoster } from '../../actions'
 import Loader from '../Loader'
 import { modal, closeButton, imageStyle, description } from './showDescription.css'
 
-const Modal = ({ children, history, match }) => {
-  const { category, ptr, page } = match.params
-  const url = `/${category}/${ptr}/${page}`
-  return ReactDOM.createPortal(
-    <div className={modal}>
-      <button className={closeButton} onClick={() => history.push(url)}>Close</button>
-      {children}
-    </div>,
-    document.getElementById('portal')
-  )
+class Modal extends Component {
+  componentWillMount() {
+    this.root = document.createElement('div')
+    document.body.appendChild(this.root)
+  }
+
+  componentWillUnmount() {
+    document.body.removeChild(this.root)
+  }
+
+  render() {
+    const { children, history, match } = this.props
+    const { category, ptr, page } = match.params
+    const url = `/${category}/${ptr}/${page}`
+    return ReactDOM.createPortal(
+      <div className={modal}>
+        <button className={closeButton} onClick={() => history.push(url)}>Close</button>
+        {children}
+      </div>,
+      this.root
+    )
+  }
 }
 
 class ShowDescription extends Component {

@@ -3,11 +3,11 @@ import { HashRouter } from 'react-router-dom'
 
 import { mount } from 'enzyme'
 
-import ShowTable from '../../../components/ShowTable'
+import ShowDescription from '../../../components/ShowDescription'
 
 jest.mock('../../../actions/api/trakt')
 
-describe('<ShowTable /> Component', () => {
+describe('Empty <ShowDescription /> Component', () => {
   let wrapper
   const _store = {
     dispatch: jest.fn(),
@@ -15,8 +15,12 @@ describe('<ShowTable /> Component', () => {
     getState: jest.fn(() =>
       ({
         shows: {
-          list: global._shows,
-          fetchShows: {}
+          list: [],
+          fetchShows: {},
+          headers: {}
+        },
+        poster: {
+          fetchPoster: {}
         },
       })
     )
@@ -25,18 +29,17 @@ describe('<ShowTable /> Component', () => {
   beforeAll(() => wrapper = mount(
     <Provider store={_store}>
       <HashRouter>
-        <ShowTable />
+        <ShowDescription />
       </HashRouter>
     </Provider>
   ))
 
   afterEach(() => jest.resetAllMocks())
 
-  it('contain ten children', () =>
+  it('contain three img', () =>
     expect(wrapper
-      .find('tbody')
-      .children()
+      .find('img')
       .length
-    ).toBe(10)
+    ).toBe(3)
   )
 })
