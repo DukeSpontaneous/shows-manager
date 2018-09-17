@@ -1,4 +1,4 @@
-import storeFactory from '../../../store'
+import storeFactory from '../../../storeFactory'
 import { loadPoster } from '../../../actions'
 
 jest.mock('../../../actions/api/trakt')

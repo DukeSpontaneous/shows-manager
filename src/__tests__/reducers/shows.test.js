@@ -1,6 +1,6 @@
-import { ACTIONS as A } from '../../../constants'
+import A from '../../constants/ActionTypes'
 
-import shows from '../../../store/reducers/shows'
+import shows from '../../reducers/shows'
 
 const initialCopy = {
   inProgress: false,

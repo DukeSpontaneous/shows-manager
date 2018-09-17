@@ -1,4 +1,4 @@
-import { ACTIONS as A } from '../../constants'
+import A from '../constants/ActionTypes'
 
 const initialShows = {
   inProgress: false,

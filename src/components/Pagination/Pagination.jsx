@@ -8,28 +8,28 @@ const makeRelocator = (history, category, sort) => page =>
 
 const Pagination = ({ history, match, pageCount }) => {
   const { category, ptr, page } = match.params
-  const n = parseInt(page, 10)
-  const prePages = [n - 3, n - 2, n - 1]
+  const curPage = parseInt(page, 10)
+  const prevPages = [curPage - 3, curPage - 2, curPage - 1]
     .filter(x => x > 0)
-  const nextPages = [n + 1, n + 2, n + 3]
+  const nextPages = [curPage + 1, curPage + 2, curPage + 3]
     .filter(x => x <= pageCount)
 
   const relocator = makeRelocator(history, category, ptr)
   return (
     <div>
       {
-        n > 4 ?
+        curPage > 4 ?
           <button onClick={relocator(1)}>{`<<`}</button> : ``
       }
       {
-        prePages.map((num, index) => <button onClick={relocator(num)} key={index}>{num}</button>)
+        prevPages.map((num, index) => <button onClick={relocator(num)} key={index}>{num}</button>)
       }
       <button disabled>{page}</button>
       {
         nextPages.map((num, index) => <button onClick={relocator(num)} key={index}>{num}</button>)
       }
       {
-        n < pageCount - 3 ?
+        curPage < pageCount - 3 ?
           <button onClick={relocator(pageCount)}>{`>>`}</button> : ``
       }
     </div>

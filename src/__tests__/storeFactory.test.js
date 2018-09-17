@@ -1,45 +1,18 @@
-import storeFactory from '../../store'
-import {
-  ACTIONS as A,
-  CATEGORIES as CTG
-} from '../../constants'
+import storeFactory from '../storeFactory'
 import {
   loadSortedPage,
   loadQueryPage,
   loadPoster
-} from '../../actions'
+} from '../actions'
 
-jest.mock('../../actions/api/trakt')
-jest.mock('../../actions/api/fanart')
+jest.mock('../actions/api/trakt')
+jest.mock('../actions/api/fanart')
 
 let store
-const shows = [
-  {
-    fetchShows: {
-      loading: false,
-      success: false,
-      failure: false
-    },
-    list: [],
-    headers: { pageCount: 0 },
-    category: ``,
-    ptr: ``
-  }
-]
-const poster = [
-  {
-    fetchPoster: {
-      loading: false,
-      success: false,
-      failure: false
-    },
-    url: ``
-  }
-]
 
 describe('store loadQueryPage', () => {
   beforeAll(() => {
-    store = storeFactory({ shows, poster })
+    store = storeFactory()
     store.dispatch(loadQueryPage())
   })
 
@@ -50,7 +23,7 @@ describe('store loadQueryPage', () => {
 
 describe('store loadSortedPage', () => {
   beforeAll(() => {
-    store = storeFactory({ shows, poster })
+    store = storeFactory()
     store.dispatch(loadSortedPage())
   })
 
@@ -61,7 +34,7 @@ describe('store loadSortedPage', () => {
 
 describe('store loadPoster', () => {
   beforeAll(() => {
-    store = storeFactory({ shows, poster })
+    store = storeFactory()
     store.dispatch(loadPoster())
   })
 

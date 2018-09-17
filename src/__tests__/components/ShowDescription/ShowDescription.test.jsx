@@ -40,6 +40,6 @@ describe('Empty <ShowDescription /> Component', () => {
     expect(wrapper
       .find('img')
       .length
-    ).toBe(3)
+    ).toBe(2)
   )
 })

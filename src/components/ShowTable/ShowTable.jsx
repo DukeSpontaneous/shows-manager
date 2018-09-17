@@ -9,7 +9,8 @@ import ShowRow from './ShowRow'
 import { table } from './showTable.css'
 
 import { loadSortedPage, loadQueryPage } from '../../actions'
-import { CATEGORIES as CTG, SORTS as S } from '../../constants'
+import CTG from '../../constants/Categories'
+import S from '../../constants/SortTypes'
 
 class Shows extends Component {
   constructor(props) {

@@ -1,6 +1,4 @@
-import {
-  CATEGORIES as CTG
-} from '../../../constants'
+import CTG from '../../../constants/Categories'
 
 export const getPage = (sort, page, limit = 10) =>
   Promise.resolve({

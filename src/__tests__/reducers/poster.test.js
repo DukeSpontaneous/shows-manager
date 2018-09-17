@@ -1,6 +1,6 @@
-import { ACTIONS as A } from '../../../constants'
+import A from '../../constants/ActionTypes'
 
-import poster from '../../../store/reducers/poster'
+import poster from '../../reducers/poster'
 
 const initialCopy = {
   inProgress: false,

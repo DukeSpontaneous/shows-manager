@@ -1,36 +1,12 @@
 import React, { Component } from 'react'
-import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
 import { loadPoster } from '../../actions'
 import Loader from '../Loader'
-import { modal, closeButton, imageStyle, description } from './showDescription.css'
-
-class Modal extends Component {
-  componentWillMount() {
-    this.root = document.createElement('div')
-    document.body.appendChild(this.root)
-  }
-
-  componentWillUnmount() {
-    document.body.removeChild(this.root)
-  }
-
-  render() {
-    const { children, history, match } = this.props
-    const { category, ptr, page } = match.params
-    const url = `/${category}/${ptr}/${page}`
-    return ReactDOM.createPortal(
-      <div className={modal}>
-        <button className={closeButton} onClick={() => history.push(url)}>Close</button>
-        {children}
-      </div>,
-      this.root
-    )
-  }
-}
+import Modal from '../Modal'
+import { closeButton, imageStyle, description } from './showDescription.css'
 
 class ShowDescription extends Component {
   constructor(props) {
@@ -62,28 +38,25 @@ class ShowDescription extends Component {
     const show = shows.list[rowId] && shows.list[rowId].show
     const { url, inProgress } = poster
 
+    const { category, ptr, page } = match.params
+    const onClose = () => history.push(`/${category}/${ptr}/${page}`)
+    const article = show ?
+      <div>
+        <h1>{show.title}</h1>
+        <p>{show.overview}</p>
+      </div> : <Loader />
+    const image = inProgress ?
+      <Loader /> :
+      <img className={imageStyle}
+        src={url}
+        alt="Poster"
+      />
     return (
       <Modal history={history} match={match}>
+        <button className={closeButton} onClick={onClose}>Close</button>
         <div className={description}>
-          {show ?
-            <div>
-              <h1>{show.title}</h1>
-              <p>{show.overview}</p>
-            </div>
-            :
-            <div>
-              <Loader />
-              <Loader />
-            </div>
-          }
-          {inProgress ?
-            <Loader />
-            :
-            <img className={imageStyle}
-              src={url}
-              alt="Poster"
-            />
-          }
+          {article}
+          {image}
         </div>
       </Modal>
     )

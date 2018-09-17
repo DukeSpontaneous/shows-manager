@@ -1,6 +1,4 @@
-import {
-  API_KEYS as K
-} from '../../constants'
+import K from '../../constants/ApiKeys'
 
 const DEFAULT_URL = `https://s.imgur.com/images/404/giraffeweyes.png`
 

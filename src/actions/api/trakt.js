@@ -1,6 +1,5 @@
-import {
-  API_KEYS as K, CATEGORIES as CTG
-} from '../../constants'
+import K from '../../constants/ApiKeys'
+import CTG from '../../constants/Categories'
 
 const parseXPaginationHeaders = headers => ({
   page: parseInt(headers.get(`X-Pagination-Page`), 10),
