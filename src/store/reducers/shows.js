@@ -1,11 +1,7 @@
 import { ACTIONS as A } from '../../constants'
 
 const initialShows = {
-  fetchShows: {
-    loading: false,
-    success: false,
-    failure: false
-  },
+  inProgress: false,
   list: [],
   headers: { pageCount: 0 },
   category: ``,
@@ -17,31 +13,19 @@ const shows = (state = initialShows, { type, payload } = { type: null }) => {
     case A.FETCH_SHOWS_REQUEST:
       return {
         ...state,
-        fetchShows: {
-          loading: true,
-          success: false,
-          failure: false
-        }
+        inProgress: true,
       }
     case A.FETCH_SHOWS_SUCCESS:
       return {
         ...state,
-        fetchShows: {
-          loading: false,
-          success: true,
-          failure: false
-        },
+        inProgress: false,
         ...payload
       }
     case A.FETCH_SHOWS_FAILURE:
       console.error(payload.error)
       return {
         ...state,
-        fetchShows: {
-          loading: false,
-          success: false,
-          failure: true
-        },
+        inProgress: false,
         list: [],
         headers: {},
         category: ``,

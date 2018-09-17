@@ -3,18 +3,8 @@ import ReactDOM from 'react-dom'
 import App from './components/App'
 import registerServiceWorker from './registerServiceWorker'
 
-import { Provider } from 'react-redux'
-import { HashRouter } from 'react-router-dom'
-import storeFactory from './store'
-
-const store = storeFactory()
-
 ReactDOM.render(
-  <Provider store={store}>
-    <HashRouter>
-      <App />
-    </HashRouter>
-  </Provider>,
+  <App />,
   document.getElementById(`root`)
 )
 registerServiceWorker()

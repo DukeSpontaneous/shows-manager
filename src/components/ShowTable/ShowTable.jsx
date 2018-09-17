@@ -34,7 +34,7 @@ class Shows extends Component {
 
   render() {
     const { history, shows } = this.props
-    const { list, fetchShows } = shows
+    const { list, inProgress } = shows
 
     const relocator = this.makeRelocator(history)
     return (
@@ -52,7 +52,7 @@ class Shows extends Component {
           </thead>
           <tbody>
             {
-              fetchShows.loading ?
+              inProgress ?
                 <PlaceholderRow /> :
                 list.map((item, index) =>
                   <ShowRow

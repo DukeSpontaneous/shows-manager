@@ -1,11 +1,7 @@
 import { ACTIONS as A } from '../../constants'
 
 const initialPoster = {
-  fetchPoster: {
-    loading: false,
-    success: false,
-    failure: false
-  },
+  inProgress: false,
   url: ``
 }
 
@@ -14,31 +10,19 @@ const poster = (state = initialPoster, { type, payload } = { type: null }) => {
     case A.FETCH_POSTER_REQUEST:
       return {
         ...state,
-        fetchPoster: {
-          loading: true,
-          success: false,
-          failure: false
-        },
+        inProgress: true
       }
     case A.FETCH_POSTER_SUCCESS:
       return {
         ...state,
-        fetchPoster: {
-          loading: false,
-          success: true,
-          failure: false
-        },
+        inProgress: false,
         ...payload
       }
     case A.FETCH_POSTER_FAILURE:
       console.error(payload.error)
       return {
         ...state,
-        fetchPoster: {
-          loading: false,
-          success: false,
-          failure: true
-        },
+        inProgress: false,
         url: ``
       }
     default:

@@ -60,7 +60,7 @@ class ShowDescription extends Component {
     const { history, match, poster, shows } = this.props;
     const { rowId } = match.params
     const show = shows.list[rowId] && shows.list[rowId].show
-    const { url, fetchPoster } = poster
+    const { url, inProgress } = poster
 
     return (
       <Modal history={history} match={match}>
@@ -76,7 +76,7 @@ class ShowDescription extends Component {
               <Loader />
             </div>
           }
-          {fetchPoster.loading ?
+          {inProgress ?
             <Loader />
             :
             <img className={imageStyle}

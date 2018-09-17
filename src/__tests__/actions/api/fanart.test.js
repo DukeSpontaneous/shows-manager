@@ -25,7 +25,7 @@ describe('fanart api', () => {
   it('should contain at last one chatacter', () =>
     expect(store.getState().poster.url.length).toBeGreaterThan(0)
   )
-  it('should be successfully completed', () =>
-    expect(store.getState().poster.fetchPoster.success).toBeTruthy()
+  it('should not be in progress', () =>
+    expect(store.getState().poster.inProgress).toBeFalsy()
   )
 })
