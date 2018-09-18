@@ -1,15 +1,17 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { Route, Switch, Redirect } from 'react-router-dom'
 
 import { HashRouter } from 'react-router-dom'
 
-import ShowDescription from './ShowDescription'
-import ShowInterface from './ShowInterface'
-import Whoops404 from './Whoops404'
+import ShowsInterface from './ShowsInterface'
+import ShowDescription from '../components/ShowDescription'
+import Whoops404 from '../components/Whoops404'
+import ModalLoader from '../components/ModalLoader'
 
 import { app } from './app.css'
 
-const App = () =>
+const App = ({ inProgress }) =>
   <HashRouter>
     <div className={app}>
       <header>
@@ -19,13 +21,18 @@ const App = () =>
         <div>
           <Switch>
             <Redirect exact from="/" to="/shows/watched/1" />
-            <Route path="/:category/:ptr/:page" component={ShowInterface} />
+            <Route path="/:category/:ptr/:page" component={ShowsInterface} />
             <Route component={Whoops404} />
           </Switch>
           <Route path="/:category/:ptr/:page/:rowId" component={ShowDescription} />
+          {inProgress && <ModalLoader />}
         </div>
       </main>
     </div>
   </HashRouter>
 
-export default App
+export default connect(
+  ({ shows }) => ({
+    inProgress: shows.inProgress
+  }),
+)(App)

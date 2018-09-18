@@ -1,7 +1,7 @@
 import A from '../constants/ActionTypes'
 
-import { getPage, searchShows } from './api/trakt'
-import { getPoster } from './api/fanart'
+import * as traktTv from './api/trakt'
+import * as fanartTv from './api/fanart'
 
 const startShowsLoading = () =>
   ({ type: A.FETCH_SHOWS_REQUEST })
@@ -14,7 +14,7 @@ const failureShowsLoading = error =>
 
 export const loadSortedPage = (sort, page, limit) => dispatch => {
   dispatch(startShowsLoading())
-  return getPage(sort, page, limit)
+  return traktTv.getPage(sort, page, limit)
     .then(payload => successShowsLoading(payload))
     .catch(error => failureShowsLoading(error))
     .then(dispatch)
@@ -22,7 +22,7 @@ export const loadSortedPage = (sort, page, limit) => dispatch => {
 
 export const loadQueryPage = (query, page, limit) => dispatch => {
   dispatch(startShowsLoading())
-  return searchShows(query, page, limit)
+  return traktTv.searchShows(query, page, limit)
     .then(payload => successShowsLoading(payload))
     .catch(error => failureShowsLoading(error))
     .then(dispatch)
@@ -39,7 +39,7 @@ const failurePosterLoading = error =>
 
 export const loadPoster = tvdb => dispatch => {
   dispatch(startPosterLoading())
-  return getPoster(tvdb)
+  return fanartTv.getPoster(tvdb)
     .then(payload => successPosterLoading(payload))
     .catch(error => failurePosterLoading(error))
     .then(dispatch)

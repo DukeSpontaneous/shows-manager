@@ -1,11 +1,11 @@
 import A from '../constants/ActionTypes'
 
-const initialPoster = {
+const initialState = {
   inProgress: false,
   url: ``
 }
 
-const poster = (state = initialPoster, { type, payload } = { type: null }) => {
+const poster = (state = initialState, { type, payload } = { type: null }) => {
   switch (type) {
     case A.FETCH_POSTER_REQUEST:
       return {
@@ -21,9 +21,7 @@ const poster = (state = initialPoster, { type, payload } = { type: null }) => {
     case A.FETCH_POSTER_FAILURE:
       console.error(payload.error)
       return {
-        ...state,
-        inProgress: false,
-        url: ``
+        ...initialState
       }
     default:
       return state

@@ -1,6 +1,6 @@
 import A from '../constants/ActionTypes'
 
-const initialShows = {
+const initialState = {
   inProgress: false,
   list: [],
   headers: { pageCount: 0 },
@@ -8,7 +8,7 @@ const initialShows = {
   ptr: ``
 }
 
-const shows = (state = initialShows, { type, payload } = { type: null }) => {
+const shows = (state = initialState, { type, payload } = { type: null }) => {
   switch (type) {
     case A.FETCH_SHOWS_REQUEST:
       return {
@@ -24,12 +24,7 @@ const shows = (state = initialShows, { type, payload } = { type: null }) => {
     case A.FETCH_SHOWS_FAILURE:
       console.error(payload.error)
       return {
-        ...state,
-        inProgress: false,
-        list: [],
-        headers: {},
-        category: ``,
-        ptr: ``
+        ...initialState
       }
     default:
       return state

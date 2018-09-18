@@ -3,11 +3,11 @@ import { HashRouter } from 'react-router-dom'
 
 import { mount } from 'enzyme'
 
-import ShowTable from '../../../components/ShowTable'
+import ShowsTable from '../../containers/ShowsTable'
 
-jest.mock('../../../actions/api/trakt')
+jest.mock('../../actions/api/trakt')
 
-describe('<ShowTable /> Component', () => {
+describe('<ShowsTable /> Component', () => {
   let wrapper
   const _store = {
     dispatch: jest.fn(),
@@ -25,7 +25,7 @@ describe('<ShowTable /> Component', () => {
   beforeAll(() => wrapper = mount(
     <Provider store={_store}>
       <HashRouter>
-        <ShowTable />
+        <ShowsTable />
       </HashRouter>
     </Provider>
   ))

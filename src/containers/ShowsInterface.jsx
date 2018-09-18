@@ -1,8 +1,8 @@
 import React from 'react'
 
-import Pagination from '../Pagination'
-import SearchShows from '../SearchShows'
-import ShowTable from '../ShowTable'
+import Pagination from '../components/Pagination'
+import SearchShows from '../components/SearchShows'
+import ShowTable from './ShowsTable'
 
 const ShowInterface = () =>
   <div>
