@@ -2,9 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const Header = ({ children, onClick }) =>
-  <td onClick={onClick}>
+  <th onClick={onClick}>
     {children}
-  </td>
+  </th>
 
 Header.propTypes = {
   children: PropTypes.node,

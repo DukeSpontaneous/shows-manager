@@ -45,17 +45,23 @@ class ShowsTable extends Component {
     const headers = (
       <Row>
         <Header>
-          Title</Header>
+          Title
+        </Header>
         <Header>
-          Year</Header>
-        <Header onClick={onHeaderClicked(S.WATCHED)}>
-          Watchers</Header>
-        <Header onClick={onHeaderClicked(S.PLAYED)}>
-          Played</Header>
+          Year
+        </Header>
         <Header>
-          Collected</Header>
-        <Header onClick={onHeaderClicked(S.COLLECTED)}>
-          Collectors</Header>
+          <button onClick={onHeaderClicked(S.WATCHED)}>Watchers</button>
+        </Header>
+        <Header>
+          <button onClick={onHeaderClicked(S.PLAYED)}>Played</button>
+        </Header>
+        <Header>
+          Collected
+        </Header>
+        <Header>
+          <button onClick={onHeaderClicked(S.COLLECTED)}>Collectors</button>
+        </Header>
       </Row>
     )
 
