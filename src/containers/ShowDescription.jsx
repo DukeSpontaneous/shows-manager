@@ -11,29 +11,27 @@ import ModalLoader from '../components/ModalLoader'
 class ShowDescription extends Component {
   constructor(props) {
     super(props)
-    this.state = { rowId: -1 }
+    this.state = { url: `` }
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     const { onPosterNeeded, match, shows } = nextProps
-    const { headers } = shows
-    const { category, ptr } = match.params
-    const page = parseInt(match.params.page, 10)
-    const nRowId = parseInt(match.params.rowId, 10)
-    if (category !== shows.category || ptr !== shows.ptr || page !== headers.page)
-      return { rowId: -1 }
 
-    const { rowId: pRowId } = prevState
-    if (shows.list[nRowId] && nRowId !== pRowId) {
-      const tvdb = shows.list[nRowId].show.ids.tvdb
+    const { url: pUrl } = prevState
+    const { url: nUrl } = match
+
+    const rowId = parseInt(match.params.rowId, 10)
+    const itsTimeToFetch = shows.list[rowId] && shows.inProgress === false && nUrl !== pUrl
+    if (itsTimeToFetch) {
+      const tvdb = shows.list[rowId].show.ids.tvdb
       onPosterNeeded(tvdb)
-      return { rowId: nRowId }
+      return { url: nUrl }
     }
     return null
   }
 
-  _makeOnClose = (history, { category, ptr, page }) =>
-    () => history.push(`/${category}/${ptr}/${page}`)
+  _makeOnClose = (history, { ptr1, ptr2, ptr3 }) =>
+    () => history.push(`/${ptr1}/${ptr2}/${ptr3}`)
 
   render() {
     const { history, match, poster, shows } = this.props;
@@ -54,11 +52,22 @@ class ShowDescription extends Component {
 }
 
 ShowDescription.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      rowId: PropTypes.string.isRequired,
+    }).isRequired
+  }).isRequired,
+
   history: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired,
   onPosterNeeded: PropTypes.func.isRequired,
-  shows: PropTypes.object.isRequired,
-  poster: PropTypes.object.isRequired
+
+  shows: PropTypes.shape({
+    list: PropTypes.array.isRequired
+  }).isRequired,
+  poster: PropTypes.shape({
+    url: PropTypes.string.isRequired,
+    inProgress: PropTypes.bool.isRequired
+  }).isRequired
 }
 
 const mapStateToProps = ({ shows, poster }) => ({

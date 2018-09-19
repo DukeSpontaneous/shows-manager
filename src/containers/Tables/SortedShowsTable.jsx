@@ -4,27 +4,27 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
-import { Table, Row, Header, Cell } from '../components/Table'
+import { Table, Row, Header, Cell } from '../../components/Table'
 
-import { loadSortedPage, loadQueryPage } from '../actions'
+import { loadSortedPage } from '../../actions'
 
-import CTG from '../constants/Categories'
-import S from '../constants/SortTypes'
+import S from '../../constants/SortTypes'
 
-class ShowsTable extends Component {
+class QueryShowsTable extends Component {
   constructor(props) {
     super(props)
-    this.state = { ptr: null, list: null }
+    this.state = { sort: null, page: null }
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const { onRelocation, match } = nextProps
-    const { category: nCtg, ptr: nSort, page: nPage } = match.params
-    const { category: pCtg, ptr: pSort, page: pPage } = prevState
+    const { onAddressChanged, match } = nextProps
+    const { sort: nSort, page: nPage } = match.params
+    const { sort: pSort, page: pPage } = prevState
 
-    if (nCtg !== pCtg || nSort !== pSort || nPage !== pPage) {
-      onRelocation(match)
-      return { category: nCtg, ptr: nSort, page: nPage }
+    const itsTimeToFetch = nSort !== pSort || nPage !== pPage
+    if (itsTimeToFetch) {
+      onAddressChanged(nSort, nPage)
+      return { sort: nSort, page: nPage }
     }
     return null
   }
@@ -82,10 +82,13 @@ class ShowsTable extends Component {
   }
 }
 
-ShowsTable.propTypes = {
+QueryShowsTable.propTypes = {
   history: PropTypes.object.isRequired,
-  onRelocation: PropTypes.func.isRequired,
-  shows: PropTypes.object.isRequired
+  onAddressChanged: PropTypes.func.isRequired,
+
+  shows: PropTypes.shape({
+    list: PropTypes.array.isRequired
+  }).isRequired,
 }
 
 const mapStateToProps = ({ shows }) => ({
@@ -93,22 +96,12 @@ const mapStateToProps = ({ shows }) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onRelocation(match) {
-    const { category, ptr, page } = match.params
-    switch (category) {
-      case CTG.SHOWS:
-        dispatch(loadSortedPage(ptr, page))
-        break
-      case CTG.SEARCH:
-        dispatch(loadQueryPage(ptr, page))
-        break
-      default:
-        break
-    }
+  onAddressChanged(sort, page) {
+    dispatch(loadSortedPage(sort, page))
   }
 })
 
 export default withRouter(connect(
   mapStateToProps,
   mapDispatchToProps
-)(ShowsTable))
+)(QueryShowsTable))

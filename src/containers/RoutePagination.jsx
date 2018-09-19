@@ -5,10 +5,10 @@ import { withRouter } from 'react-router'
 
 import Pagination from '../components/Pagination'
 
-const _makeOnClicked = (history, { category, ptr }) => page =>
-  () => history.push(`/${category}/${ptr}/${page}`)
+const _makeOnClicked = (history, { ptr1, ptr2 }) => page =>
+  () => history.push(`/${ptr1}/${ptr2}/${page}`)
 
-const ShowsPagination = ({ history, match, pageCount }) => {
+const RoutePagination = ({ history, match, pageCount }) => {
   const onPageClicked = _makeOnClicked(history, match.params)
   const props = {
     current: parseInt(match.params.page, 10),
@@ -18,16 +18,22 @@ const ShowsPagination = ({ history, match, pageCount }) => {
   return <Pagination {...props} />
 }
 
-ShowsPagination.propTypes = {
+RoutePagination.propTypes = {
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      category: PropTypes.string.isRequired,
+      ptr: PropTypes.string.isRequired
+    }).isRequired
+  }).isRequired,
+
   history: PropTypes.object.isRequired,
-  match: PropTypes.object.isRequired,
   pageCount: PropTypes.number.isRequired
 }
 
 const mapStateToProps = ({ shows }) => ({
-  pageCount: shows.headers.pageCount
+  pageCount: shows.pageCount
 })
 
 export default withRouter(connect(
   mapStateToProps
-)(ShowsPagination))
+)(RoutePagination))

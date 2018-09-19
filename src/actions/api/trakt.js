@@ -1,5 +1,4 @@
 import K from '../../constants/ApiKeys'
-import CTG from '../../constants/Categories'
 
 const parseXPaginationHeaders = headers => ({
   page: parseInt(headers.get(`X-Pagination-Page`), 10),
@@ -27,7 +26,7 @@ export const getPage = (sort, page, limit) => {
       headers = parseXPaginationHeaders(respond.headers)
       return respond.json()
     })
-    .then(list => ({ category: CTG.SHOWS, ptr: sort, list, headers }))
+    .then(list => ({ list, pageCount: headers.pageCount }))
 }
 
 export const searchShows = (query, page, limit) => {
@@ -40,5 +39,5 @@ export const searchShows = (query, page, limit) => {
       headers = parseXPaginationHeaders(respond.headers)
       return respond.json()
     })
-    .then(list => ({ category: CTG.SEARCH, ptr: query, list, headers }))
+    .then(list => ({ list, pageCount: headers.pageCount }))
 }

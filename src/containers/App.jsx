@@ -5,10 +5,14 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 
 import { HashRouter } from 'react-router-dom'
 
-import ShowsInterface from './ShowsInterface'
-import ShowDescription from './ShowDescription'
 import Whoops404 from '../components/Whoops404'
 import ModalLoader from '../components/ModalLoader'
+
+import ShowDescription from './ShowDescription'
+import ShowsSearch from './ShowsSearch'
+import RoutePagination from './RoutePagination'
+import SortedShowsTable from './Tables/SortedShowsTable'
+import QueryShowsTable from './Tables/QueryShowsTable'
 
 import { app } from './app.css'
 
@@ -20,13 +24,15 @@ const App = ({ inProgress }) =>
       </header>
       <main>
         <div>
+          <ShowsSearch />
           <Switch>
             <Redirect exact from="/" to="/shows/watched/1" />
-            <Route path="/:category/:ptr/:page" component={ShowsInterface} />
+            <Route path="/shows/:sort/:page" component={SortedShowsTable} />
+            <Route path="/search/:query/:page" component={QueryShowsTable} />
             <Route component={Whoops404} />
           </Switch>
-          <Route path="/:category/:ptr/:page/:rowId" component={ShowDescription} />
-          {inProgress && <ModalLoader />}
+          <Route path="/:ptr1/:ptr2/:page/" component={RoutePagination} />
+          {inProgress ? <ModalLoader /> : <Route path="/:ptr1/:ptr2/:ptr3/:rowId" component={ShowDescription} />}
         </div>
       </main>
     </div>

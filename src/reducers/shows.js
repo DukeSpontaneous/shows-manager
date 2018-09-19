@@ -2,10 +2,8 @@ import A from '../constants/ActionTypes'
 
 const initialState = {
   inProgress: false,
-  list: [],
-  headers: { pageCount: 0 },
-  category: ``,
-  ptr: ``
+  list: [],  
+  pageCount: 0
 }
 
 const shows = (state = initialState, { type, payload } = { type: null }) => {

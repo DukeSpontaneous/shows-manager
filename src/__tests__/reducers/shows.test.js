@@ -5,9 +5,7 @@ import shows from '../../reducers/shows'
 const initialCopy = {
   inProgress: false,
   list: [],
-  headers: { pageCount: 0 },
-  category: ``,
-  ptr: ``
+  pageCount: 0
 }
 
 describe('shows reducer', () => {

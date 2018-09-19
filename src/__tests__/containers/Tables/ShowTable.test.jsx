@@ -3,9 +3,9 @@ import { HashRouter } from 'react-router-dom'
 
 import { mount } from 'enzyme'
 
-import ShowsTable from '../../containers/ShowsTable'
+import SortedShowsTable from '../../../containers/Tables/SortedShowsTable'
 
-jest.mock('../../actions/api/trakt')
+jest.mock('../../../actions/api/trakt')
 
 describe('<ShowsTable /> Component', () => {
   let wrapper
@@ -15,8 +15,7 @@ describe('<ShowsTable /> Component', () => {
     getState: jest.fn(() =>
       ({
         shows: {
-          list: global._shows,
-          fetchShows: {}
+          list: global._shows
         },
       })
     )
@@ -25,7 +24,7 @@ describe('<ShowsTable /> Component', () => {
   beforeAll(() => wrapper = mount(
     <Provider store={_store}>
       <HashRouter>
-        <ShowsTable />
+        <SortedShowsTable />
       </HashRouter>
     </Provider>
   ))
