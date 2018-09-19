@@ -3,10 +3,10 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
-import { loadPoster } from '../../actions'
-import Loader from '../Loader'
-import Modal from '../Modal'
-import { closeButton, imageStyle, description } from './showDescription.css'
+import { loadPoster } from '../actions'
+
+import ModalDescription from '../components/ModalDescription'
+import ModalLoader from '../components/ModalLoader'
 
 class ShowDescription extends Component {
   constructor(props) {
@@ -32,34 +32,24 @@ class ShowDescription extends Component {
     return null
   }
 
+  _makeOnClose = (history, { category, ptr, page }) =>
+    () => history.push(`/${category}/${ptr}/${page}`)
+
   render() {
     const { history, match, poster, shows } = this.props;
     const { rowId } = match.params
     const show = shows.list[rowId] && shows.list[rowId].show
     const { url, inProgress } = poster
 
-    const { category, ptr, page } = match.params
-    const onClose = () => history.push(`/${category}/${ptr}/${page}`)
-    const article = show ?
-      <div>
-        <h1>{show.title}</h1>
-        <p>{show.overview}</p>
-      </div> : <Loader />
-    const image = inProgress ?
-      <Loader /> :
-      <img className={imageStyle}
-        src={url}
-        alt="Poster"
-      />
-    return (
-      <Modal history={history} match={match}>
-        <button className={closeButton} onClick={onClose}>Close</button>
-        <div className={description}>
-          {article}
-          {image}
-        </div>
-      </Modal>
-    )
+    const onClose = this._makeOnClose(history, match.params)
+
+    const args = {
+      title: show && show.title,
+      overview: show && show.overview,
+      imgUrl: url,
+      onClose
+    }
+    return inProgress ? <ModalLoader /> : <ModalDescription {...args} />
   }
 }
 
@@ -71,14 +61,18 @@ ShowDescription.propTypes = {
   poster: PropTypes.object.isRequired
 }
 
+const mapStateToProps = ({ shows, poster }) => ({
+  shows,
+  poster
+})
+
+const mapDispatchToProps = dispatch => ({
+  onPosterNeeded(tvdb) {
+    dispatch(loadPoster(tvdb))
+  }
+})
+
 export default withRouter(connect(
-  ({ shows, poster }) => ({
-    shows,
-    poster
-  }),
-  dispatch => ({
-    onPosterNeeded(tvdb) {
-      dispatch(loadPoster(tvdb))
-    }
-  })
+  mapStateToProps,
+  mapDispatchToProps
 )(ShowDescription))

@@ -88,23 +88,27 @@ ShowsTable.propTypes = {
   shows: PropTypes.object.isRequired
 }
 
-export default withRouter(connect(
-  ({ shows }) => ({
-    shows
-  }),
-  dispatch => ({
-    onRelocation(match) {
-      const { category, ptr, page } = match.params
-      switch (category) {
-        case CTG.SHOWS:
-          dispatch(loadSortedPage(ptr, page))
-          break
-        case CTG.SEARCH:
-          dispatch(loadQueryPage(ptr, page))
-          break
-        default:
-          break
-      }
+const mapStateToProps = ({ shows }) => ({
+  shows
+})
+
+const mapDispatchToProps = dispatch => ({
+  onRelocation(match) {
+    const { category, ptr, page } = match.params
+    switch (category) {
+      case CTG.SHOWS:
+        dispatch(loadSortedPage(ptr, page))
+        break
+      case CTG.SEARCH:
+        dispatch(loadQueryPage(ptr, page))
+        break
+      default:
+        break
     }
-  })
+  }
+})
+
+export default withRouter(connect(
+  mapStateToProps,
+  mapDispatchToProps
 )(ShowsTable))

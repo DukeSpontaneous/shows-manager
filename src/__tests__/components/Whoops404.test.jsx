@@ -1,6 +1,6 @@
 import { shallow } from 'enzyme'
 
-import Whoops404 from '../../../components/Whoops404'
+import Whoops404 from '../../components/Whoops404'
 
 describe('<Whoops404 /> UI Component', () => {
   it('contain two children Whoops404', () =>

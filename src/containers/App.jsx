@@ -6,7 +6,7 @@ import { Route, Switch, Redirect } from 'react-router-dom'
 import { HashRouter } from 'react-router-dom'
 
 import ShowsInterface from './ShowsInterface'
-import ShowDescription from '../components/ShowDescription'
+import ShowDescription from './ShowDescription'
 import Whoops404 from '../components/Whoops404'
 import ModalLoader from '../components/ModalLoader'
 
@@ -36,8 +36,10 @@ App.propTypes = {
   inProgress: PropTypes.bool.isRequired,
 }
 
+const mapStateToProps = ({ shows }) => ({
+  inProgress: shows.inProgress
+})
+
 export default connect(
-  ({ shows }) => ({
-    inProgress: shows.inProgress
-  }),
+  mapStateToProps
 )(App)

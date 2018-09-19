@@ -1,13 +1,11 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-import { withRouter } from 'react-router'
-
-const SearchShows = ({ history }) => {
+const Search = ({ onSubmited }) => {
   let _query
   const submit = e => {
     e.preventDefault()
-    history.push(`/search/${_query.value}/1`)
+    onSubmited(_query.value)
     _query.value = ''
     _query.focus()
   }
@@ -27,8 +25,8 @@ const SearchShows = ({ history }) => {
   )
 }
 
-SearchShows.propTypes = {
-  history: PropTypes.object.isRequired
+Search.propTypes = {
+  onSubmited: PropTypes.func.isRequired
 }
 
-export default withRouter(SearchShows)
+export default Search

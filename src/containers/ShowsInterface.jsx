@@ -1,14 +1,14 @@
 import React from 'react'
 
-import Pagination from '../components/Pagination'
-import SearchShows from '../components/SearchShows'
+import ShowsPagination from './ShowsPagination'
+import ShowsSearch from './ShowsSearch'
 import ShowTable from './ShowsTable'
 
 const ShowInterface = () =>
   <div>
-    <SearchShows />
+    <ShowsSearch />
     <ShowTable />
-    <Pagination />
+    <ShowsPagination />
   </div>
 
 export default ShowInterface

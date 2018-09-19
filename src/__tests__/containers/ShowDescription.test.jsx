@@ -3,9 +3,9 @@ import { HashRouter } from 'react-router-dom'
 
 import { mount } from 'enzyme'
 
-import ShowDescription from '../../../components/ShowDescription'
+import ShowDescription from '../../containers/ShowDescription'
 
-jest.mock('../../../actions/api/trakt')
+jest.mock('../../actions/api/trakt')
 
 describe('Empty <ShowDescription /> Component', () => {
   let wrapper
@@ -15,7 +15,7 @@ describe('Empty <ShowDescription /> Component', () => {
     getState: jest.fn(() =>
       ({
         shows: {
-          list: [],
+          list: global._shows,
           fetchShows: {},
           headers: {}
         },
@@ -40,6 +40,6 @@ describe('Empty <ShowDescription /> Component', () => {
     expect(wrapper
       .find('img')
       .length
-    ).toBe(2)
+    ).toBe(1)
   )
 })
