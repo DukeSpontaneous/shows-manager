@@ -1,0 +1,15 @@
+.pagination {
+  text-align: center;
+  padding: 0.5rem;
+}
+
+.pagination button {
+  border-radius: 0.4rem;
+  font-family: 'Times New Roman', Times, serif;
+  font-size: 1rem;
+}
+
+.pagination button:disabled {
+  border: 0;
+  background-color: #ededed;
+}

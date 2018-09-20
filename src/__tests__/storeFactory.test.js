@@ -17,7 +17,7 @@ describe('store loadQueryPage', () => {
   })
 
   it('should contain five query', () =>
-    expect(store.getState().shows.list.length).toBe(5)
+    expect(store.getState().shows.list.length).toBe(6)
   )
 })
 

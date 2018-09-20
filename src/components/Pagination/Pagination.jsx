@@ -1,6 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
+import { pagination } from './pagination.css'
+
 const numberRange = (start, end) =>
   new Array(end - start + 1).fill().map((d, i) => i + start)
 
@@ -16,13 +18,13 @@ const Pagination = ({ current, total, onPageClicked }) => {
     )
   buttons = [
     current > 3 &&
-    <button onClick={onPageClicked(1)} key={1}>{`<<`}</button>,
+    <button onClick={onPageClicked(1)} key={1}>{`⮘`}</button>,
     ...buttons,
     current < total - 3 &&
-    <button onClick={onPageClicked(total)} key={total}>{`>>`}</button>,
+    <button onClick={onPageClicked(total)} key={total}>{`⮚`}</button>,
   ]
 
-  return <div>{buttons}</div>
+  return <div className={pagination}>{buttons}</div>
 }
 
 Pagination.propTypes = {
