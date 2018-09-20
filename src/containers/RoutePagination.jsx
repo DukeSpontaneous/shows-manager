@@ -21,8 +21,9 @@ const RoutePagination = ({ history, match, pageCount }) => {
 RoutePagination.propTypes = {
   match: PropTypes.shape({
     params: PropTypes.shape({
-      category: PropTypes.string.isRequired,
-      ptr: PropTypes.string.isRequired
+      ptr1: PropTypes.string.isRequired,
+      ptr2: PropTypes.string.isRequired,
+      page: PropTypes.string.isRequired
     }).isRequired
   }).isRequired,
 

@@ -4,7 +4,7 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
 
-import { Table, Row, Header, Cell } from '../../components/Table'
+import { Table, NavHeaders, ArrayRow } from '../../components/Table'
 
 import { loadSortedPage } from '../../actions'
 
@@ -29,8 +29,8 @@ class QueryShowsTable extends Component {
     return null
   }
 
-  _makeOnHeaderClicked = history => ptr =>
-    () => history.push(`/shows/${ptr}/1`)
+  _makeSortObject = (title, sort) =>
+    ({ title, url: sort && `/shows/${sort}` })
 
   _makeOnRowClicked = history => index =>
     () => history.push(`${history.location.pathname}/${index}`)
@@ -39,43 +39,28 @@ class QueryShowsTable extends Component {
     const { history, shows } = this.props
     const { list } = shows
 
-    const onHeaderClicked = this._makeOnHeaderClicked(history)
     const onRowClicked = this._makeOnRowClicked(history)
 
-    const headers = (
-      <Row>
-        <Header>
-          Title
-        </Header>
-        <Header>
-          Year
-        </Header>
-        <Header>
-          <button onClick={onHeaderClicked(S.WATCHED)}>Watchers</button>
-        </Header>
-        <Header>
-          <button onClick={onHeaderClicked(S.PLAYED)}>Played</button>
-        </Header>
-        <Header>
-          Collected
-        </Header>
-        <Header>
-          <button onClick={onHeaderClicked(S.COLLECTED)}>Collectors</button>
-        </Header>
-      </Row>
-    )
-
+    const headers = <NavHeaders headers={[
+      this._makeSortObject(`Title`),
+      this._makeSortObject(`Year`),
+      this._makeSortObject(`Watchers`, S.WATCHED),
+      this._makeSortObject(`Played`, S.PLAYED),
+      this._makeSortObject(`Collected`),
+      this._makeSortObject(`Collectors`, S.COLLECTED),
+    ]} />
     return (
       <Table headers={headers}>
         {list.map((item, index) =>
-          <Row key={item.show.ids.trakt} onClick={onRowClicked(index)}>
-            <Cell>{item.show.title}</Cell>
-            <Cell>{item.show.year}</Cell>
-            <Cell>{item.watcher_count}</Cell>
-            <Cell>{item.play_count}</Cell>
-            <Cell>{item.collected_count}</Cell>
-            <Cell>{item.collector_count}</Cell>
-          </Row>
+          <ArrayRow key={item.show.ids.trakt} onClick={onRowClicked(index)}
+            array={[
+              item.show.title,
+              item.show.year,
+              item.watcher_count,
+              item.play_count,
+              item.collected_count,
+              item.collector_count
+            ]} />
         )}
       </Table>
     )

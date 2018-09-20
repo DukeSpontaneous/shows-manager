@@ -15,6 +15,44 @@
   },
   {
     "type": "show",
+    "score": -3.4028235e+38,
+    "show": {
+      "title": "Flavours of Peru",
+      "year": 1969,
+      "ids": {
+        "imdb": null,
+        "slug": "flavours-of-peru",
+        "tmdb": null,
+        "trakt": 63753,
+        "tvdb": 248377,
+        "tvrage": null
+      },
+      "aired_episodes": 0,
+      "airs": {
+        "day": null,
+        "time": null,
+        "timezone": "Europe/London"
+      },
+      "available_translations": [],
+      "certification": null,
+      "comment_count": 0,
+      "country": null,
+      "first_aired": null,
+      "genres": [],
+      "homepage": null,
+      "language": null,
+      "network": null,
+      "overview": "Charlie Ottley sets out to see if Peru's cuisine can match its stunning landscapes. From the high plains of the Altiplano to the depths of the Amazon Rainforest, Charlie marvels at the diversity of Peru's natural wonders as he takes in cloudforest citadels, towering pyramids, floating islands and deserted beaches. Peru's cuisine can be just a exotic whether it is fresh local river shrimp or Pisco, the national drink. As guest of honour at a family barbecue in Cusco, Charlie gets to sample pig's head. Lucky Charlie!",
+      "rating": 0,
+      "runtime": 1,
+      "status": "",
+      "trailer": null,
+      "updated_at": "2018-08-22T23:41:40.000Z",
+      "votes": 0
+    }
+  },
+  {
+    "type": "show",
     "score": 19.533358,
     "show": {
       "title": "Tron: Uprising",

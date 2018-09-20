@@ -99,12 +99,15 @@
 }
 
 .table a:visited {
-	color: #999999;
-	font-weight: bold;
 	text-decoration: none;
 }
 
 .table a:active, .table a:hover {
 	color: #bd5a35;
 	text-decoration: underline;
+}
+
+.table p:active, .table p:hover {
+	color: #999999;
+	font-weight: bold;
 }

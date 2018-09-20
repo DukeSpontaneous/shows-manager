@@ -27,6 +27,7 @@ const App = ({ inProgress }) =>
           <ShowsSearch />
           <Switch>
             <Redirect exact from="/" to="/shows/watched/1" />
+            <Redirect exact from='/shows/:sort' to='/shows/:sort/1' />
             <Route path="/shows/:sort/:page" component={SortedShowsTable} />
             <Route path="/search/:query/:page" component={QueryShowsTable} />
             <Route component={Whoops404} />
