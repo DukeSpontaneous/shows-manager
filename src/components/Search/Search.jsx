@@ -1,28 +1,36 @@
-import React from 'react'
+import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
-const Search = ({ onSubmited }) => {
-  let _query
-  const submit = e => {
-    e.preventDefault()
-    onSubmited(_query.value)
-    _query.value = ''
-    _query.focus()
+class Search extends Component {
+  constructor(props) {
+    super(props)
+    this._submit = this._handleSubmit.bind(this)
   }
 
-  return (
-    <div>
-      <form onSubmit={submit}>
-        <input
-          type='text'
-          name='search'
-          placeholder='Search...'
-          ref={input => _query = input}
-          required
-        />
-      </form>
-    </div>
-  )
+  _handleSubmit(e) {
+    e.preventDefault()
+
+    const input = this.input
+    this.props.onSubmited(input.value)
+    input.value = ''
+    input.focus()
+  }
+
+  render() {
+    return (
+      <div>
+        <form onSubmit={this._submit}>
+          <input
+            type='text'
+            name='search'
+            placeholder='Search...'
+            ref={input => this.input = input}
+            required
+          />
+        </form>
+      </div>
+    )
+  }
 }
 
 Search.propTypes = {

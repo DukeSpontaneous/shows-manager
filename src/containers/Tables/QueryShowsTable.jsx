@@ -11,18 +11,16 @@ import { loadQueryPage } from '../../actions'
 class QueryShowsTable extends Component {
   constructor(props) {
     super(props)
-    this.state = { query: null, page: null }
+    this.state = {}
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const { onAddressChanged, match } = nextProps
-    const { query: nQuery, page: nPage } = match.params
-    const { query: pQuery, page: pPage } = prevState
+    const { onUrlChanged, match } = nextProps
+    const itsTimeToFetch = match.url !== prevState.url
 
-    const itsTimeToFetch = nQuery !== pQuery || nPage !== pPage
     if (itsTimeToFetch) {
-      onAddressChanged(nQuery, nPage)
-      return { query: nQuery, page: nPage }
+      onUrlChanged(match.params)
+      return { url: match.url }
     }
     return null
   }
@@ -35,7 +33,6 @@ class QueryShowsTable extends Component {
 
   render() {
     const { history, shows } = this.props
-    const { list } = shows
 
     const onRowClicked = this._makeOnRowClicked(history)
 
@@ -49,7 +46,7 @@ class QueryShowsTable extends Component {
     ]} />
     return (
       <Table headers={headers}>
-        {list.map((item, index) =>
+        {shows.list.map((item, index) =>
           <ArrayRow key={item.show.ids.trakt} onClick={onRowClicked(index)}
             array={[
               item.show.title,
@@ -67,7 +64,10 @@ class QueryShowsTable extends Component {
 
 QueryShowsTable.propTypes = {
   history: PropTypes.object.isRequired,
-  onAddressChanged: PropTypes.func.isRequired,
+  match: PropTypes.shape({
+    url: PropTypes.string.isRequired
+  }).isRequired,
+  onUrlChanged: PropTypes.func.isRequired,
 
   shows: PropTypes.shape({
     list: PropTypes.array.isRequired
@@ -79,7 +79,7 @@ const mapStateToProps = ({ shows }) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onAddressChanged(query, page) {
+  onUrlChanged({ query, page }) {
     dispatch(loadQueryPage(query, page))
   }
 })

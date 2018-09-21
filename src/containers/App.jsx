@@ -36,7 +36,10 @@ const App = ({ inProgress }) =>
       <Footer>
         <Route path="/:ptr1/:ptr2/:page/" component={RoutePagination} />
       </Footer>
-      {inProgress ? <ModalLoader /> : <Route path="/:ptr1/:ptr2/:ptr3/:rowId" component={ShowDescription} />}
+      {
+        inProgress ?
+          <ModalLoader /> : <Route path="/:ptr1/:ptr2/:ptr3/:rowId" component={ShowDescription} />
+      }
     </div>
   </HashRouter>
 

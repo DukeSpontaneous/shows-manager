@@ -11,21 +11,18 @@ import ModalLoader from '../components/ModalLoader'
 class ShowDescription extends Component {
   constructor(props) {
     super(props)
-    this.state = { url: `` }
+    this.state = {}
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
     const { onPosterNeeded, match, shows } = nextProps
 
-    const { url: pUrl } = prevState
-    const { url: nUrl } = match
-
     const rowId = parseInt(match.params.rowId, 10)
-    const itsTimeToFetch = shows.list[rowId] && shows.inProgress === false && nUrl !== pUrl
+    const itsTimeToFetch = shows.list[rowId] && shows.inProgress === false && match.url !== prevState.url
     if (itsTimeToFetch) {
       const tvdb = shows.list[rowId].show.ids.tvdb
       onPosterNeeded(tvdb)
-      return { url: nUrl }
+      return { url: match.url }
     }
     return null
   }
@@ -52,17 +49,19 @@ class ShowDescription extends Component {
 }
 
 ShowDescription.propTypes = {
+  history: PropTypes.object.isRequired,
   match: PropTypes.shape({
+    url: PropTypes.string.isRequired,
     params: PropTypes.shape({
       rowId: PropTypes.string.isRequired,
     }).isRequired
   }).isRequired,
 
-  history: PropTypes.object.isRequired,
   onPosterNeeded: PropTypes.func.isRequired,
 
   shows: PropTypes.shape({
-    list: PropTypes.array.isRequired
+    list: PropTypes.array.isRequired,
+    inProgress: PropTypes.bool.isRequired
   }).isRequired,
   poster: PropTypes.shape({
     url: PropTypes.string.isRequired,

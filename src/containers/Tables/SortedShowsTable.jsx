@@ -13,18 +13,16 @@ import S from '../../constants/SortTypes'
 class QueryShowsTable extends Component {
   constructor(props) {
     super(props)
-    this.state = { sort: null, page: null }
+    this.state = {}
   }
 
   static getDerivedStateFromProps(nextProps, prevState) {
-    const { onAddressChanged, match } = nextProps
-    const { sort: nSort, page: nPage } = match.params
-    const { sort: pSort, page: pPage } = prevState
+    const { onUrlChanged, match } = nextProps
+    const itsTimeToFetch = match.url !== prevState.url
 
-    const itsTimeToFetch = nSort !== pSort || nPage !== pPage
     if (itsTimeToFetch) {
-      onAddressChanged(nSort, nPage)
-      return { sort: nSort, page: nPage }
+      onUrlChanged(match.params)
+      return { url: match.url }
     }
     return null
   }
@@ -37,7 +35,6 @@ class QueryShowsTable extends Component {
 
   render() {
     const { history, shows } = this.props
-    const { list } = shows
 
     const onRowClicked = this._makeOnRowClicked(history)
 
@@ -51,7 +48,7 @@ class QueryShowsTable extends Component {
     ]} />
     return (
       <Table headers={headers}>
-        {list.map((item, index) =>
+        {shows.list.map((item, index) =>
           <ArrayRow key={item.show.ids.trakt} onClick={onRowClicked(index)}
             array={[
               item.show.title,
@@ -69,7 +66,10 @@ class QueryShowsTable extends Component {
 
 QueryShowsTable.propTypes = {
   history: PropTypes.object.isRequired,
-  onAddressChanged: PropTypes.func.isRequired,
+  match: PropTypes.shape({
+    url: PropTypes.string.isRequired
+  }).isRequired,
+  onUrlChanged: PropTypes.func.isRequired,
 
   shows: PropTypes.shape({
     list: PropTypes.array.isRequired
@@ -81,7 +81,7 @@ const mapStateToProps = ({ shows }) => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  onAddressChanged(sort, page) {
+  onUrlChanged({ sort, page }) {
     dispatch(loadSortedPage(sort, page))
   }
 })
