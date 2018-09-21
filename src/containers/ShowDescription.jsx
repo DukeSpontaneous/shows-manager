@@ -1,7 +1,9 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
+import { compose } from 'redux'
 
 import { loadPoster } from '../actions'
 
@@ -80,7 +82,7 @@ const mapDispatchToProps = dispatch => ({
   }
 })
 
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(ShowDescription))
+export default compose(
+  connect(mapStateToProps, mapDispatchToProps),
+  withRouter
+)(ShowDescription)

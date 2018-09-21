@@ -3,6 +3,9 @@ import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
+import { compose } from 'redux'
+
+import URLWatcher from './URLWatcher'
 
 import { Table, NavHeaders, ArrayRow } from '../../components/Table'
 
@@ -10,22 +13,9 @@ import { loadSortedPage } from '../../actions'
 
 import S from '../../constants/SortTypes'
 
-class QueryShowsTable extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    const { onUrlChanged, match } = nextProps
-    const itsTimeToFetch = match.url !== prevState.url
-
-    if (itsTimeToFetch) {
-      onUrlChanged(match.params)
-      return { url: match.url }
-    }
-    return null
-  }
+class SortedShowsTable extends Component {
+  _mapParamsToAction = ({ sort, page }) =>
+    loadSortedPage(sort, page)
 
   _makeSortObject = (title, sort) =>
     ({ title, url: sort && `/shows/${sort}` })
@@ -47,29 +37,27 @@ class QueryShowsTable extends Component {
       this._makeSortObject(`Collectors`, S.COLLECTED),
     ]} />
     return (
-      <Table headers={headers}>
-        {shows.list.map((item, index) =>
-          <ArrayRow key={item.show.ids.trakt} onClick={onRowClicked(index)}
-            array={[
-              item.show.title,
-              item.show.year,
-              item.watcher_count,
-              item.play_count,
-              item.collected_count,
-              item.collector_count
-            ]} />
-        )}
-      </Table>
+      <URLWatcher mapParamsToAction={this._mapParamsToAction}>
+        <Table headers={headers}>
+          {shows.list.map((item, index) =>
+            <ArrayRow key={item.show.ids.trakt} onClick={onRowClicked(index)}
+              array={[
+                item.show.title,
+                item.show.year,
+                item.watcher_count,
+                item.play_count,
+                item.collected_count,
+                item.collector_count
+              ]} />
+          )}
+        </Table>
+      </URLWatcher>
     )
   }
 }
 
-QueryShowsTable.propTypes = {
+SortedShowsTable.propTypes = {
   history: PropTypes.object.isRequired,
-  match: PropTypes.shape({
-    url: PropTypes.string.isRequired
-  }).isRequired,
-  onUrlChanged: PropTypes.func.isRequired,
 
   shows: PropTypes.shape({
     list: PropTypes.array.isRequired
@@ -80,13 +68,7 @@ const mapStateToProps = ({ shows }) => ({
   shows
 })
 
-const mapDispatchToProps = dispatch => ({
-  onUrlChanged({ sort, page }) {
-    dispatch(loadSortedPage(sort, page))
-  }
-})
-
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(QueryShowsTable))
+export default compose(
+  connect(mapStateToProps),
+  withRouter
+)(SortedShowsTable)

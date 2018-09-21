@@ -3,27 +3,17 @@ import PropTypes from 'prop-types'
 
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
+import { compose } from 'redux'
+
+import URLWatcher from './URLWatcher'
 
 import { Table, NavHeaders, ArrayRow } from '../../components/Table'
 
 import { loadQueryPage } from '../../actions'
 
 class QueryShowsTable extends Component {
-  constructor(props) {
-    super(props)
-    this.state = {}
-  }
-
-  static getDerivedStateFromProps(nextProps, prevState) {
-    const { onUrlChanged, match } = nextProps
-    const itsTimeToFetch = match.url !== prevState.url
-
-    if (itsTimeToFetch) {
-      onUrlChanged(match.params)
-      return { url: match.url }
-    }
-    return null
-  }
+  _mapParamsToAction = ({ query, page }) =>
+    loadQueryPage(query, page)
 
   _makeSortObject = (title, sort) =>
     ({ title, url: sort && `/shows/${sort}` })
@@ -45,29 +35,27 @@ class QueryShowsTable extends Component {
       this._makeSortObject(`Votes`),
     ]} />
     return (
-      <Table headers={headers}>
-        {shows.list.map((item, index) =>
-          <ArrayRow key={item.show.ids.trakt} onClick={onRowClicked(index)}
-            array={[
-              item.show.title,
-              item.show.year,
-              item.show.comment_count,
-              item.show.rating,
-              item.show.runtime,
-              item.show.votes,
-            ]} />
-        )}
-      </Table>
+      <URLWatcher mapParamsToAction={this._mapParamsToAction}>
+        <Table headers={headers}>
+          {shows.list.map((item, index) =>
+            <ArrayRow key={item.show.ids.trakt} onClick={onRowClicked(index)}
+              array={[
+                item.show.title,
+                item.show.year,
+                item.show.comment_count,
+                item.show.rating,
+                item.show.runtime,
+                item.show.votes,
+              ]} />
+          )}
+        </Table>
+      </URLWatcher>
     )
   }
 }
 
 QueryShowsTable.propTypes = {
   history: PropTypes.object.isRequired,
-  match: PropTypes.shape({
-    url: PropTypes.string.isRequired
-  }).isRequired,
-  onUrlChanged: PropTypes.func.isRequired,
 
   shows: PropTypes.shape({
     list: PropTypes.array.isRequired
@@ -78,13 +66,7 @@ const mapStateToProps = ({ shows }) => ({
   shows
 })
 
-const mapDispatchToProps = dispatch => ({
-  onUrlChanged({ query, page }) {
-    dispatch(loadQueryPage(query, page))
-  }
-})
-
-export default withRouter(connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(QueryShowsTable))
+export default compose(
+  connect(mapStateToProps),
+  withRouter
+)(QueryShowsTable)

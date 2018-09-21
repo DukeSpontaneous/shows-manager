@@ -1,9 +1,8 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import { Route, Switch, Redirect } from 'react-router-dom'
+import { HashRouter, Route, Switch, Redirect } from 'react-router-dom'
 
-import { HashRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
 
 import Whoops404 from '../components/Whoops404'
 import ModalLoader from '../components/ModalLoader'

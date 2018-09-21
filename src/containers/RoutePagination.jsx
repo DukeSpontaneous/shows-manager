@@ -1,7 +1,9 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+
 import { connect } from 'react-redux'
 import { withRouter } from 'react-router'
+import { compose } from 'redux'
 
 import Pagination from '../components/Pagination'
 
@@ -35,6 +37,7 @@ const mapStateToProps = ({ shows }) => ({
   pageCount: shows.pageCount
 })
 
-export default withRouter(connect(
-  mapStateToProps
-)(RoutePagination))
+export default compose(
+  connect(mapStateToProps),
+  withRouter
+)(RoutePagination)
